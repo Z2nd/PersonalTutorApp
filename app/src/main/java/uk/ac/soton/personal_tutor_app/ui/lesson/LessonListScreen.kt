@@ -29,6 +29,7 @@ fun LessonListScreen(
     Column(modifier = Modifier
         .fillMaxSize()
         .padding(16.dp)
+        .systemBarsPadding()
     ) {
         Button(onClick = { navController.navigate("lessonDetail/new/$courseId") }) {
             Text("新建课时")

@@ -58,6 +58,7 @@ fun CourseDetailScreen(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp)
+            .systemBarsPadding()
     ) {
         // —— 标题 & 简介 输入 ——
         OutlinedTextField(

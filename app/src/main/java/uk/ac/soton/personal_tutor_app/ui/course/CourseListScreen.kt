@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
@@ -40,6 +41,7 @@ fun CourseListScreen(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp)
+            .systemBarsPadding()
     ) {
         // “新建课程”按钮
         Button(onClick = { navController.navigate("courseDetail/new") }) {

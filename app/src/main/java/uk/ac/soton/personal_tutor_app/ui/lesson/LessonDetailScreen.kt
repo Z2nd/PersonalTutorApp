@@ -35,6 +35,7 @@ fun LessonDetailScreen(
     Column(modifier = Modifier
         .fillMaxSize()
         .padding(16.dp)
+        .systemBarsPadding()
     ) {
         OutlinedTextField(
             value = title,
