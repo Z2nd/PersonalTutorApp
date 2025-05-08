@@ -36,14 +36,7 @@ fun CourseListScreen(
         return
     }
 
-    // 2. 订阅课程列表
-    // 注意：这里的逻辑可能需要根据您的应用需求调整。
-    // 如果学生只能看到他们选的课程，您需要修改 CourseRepository.getCoursesForTutor
-    // 或者创建一个新的方法来获取学生相关的课程。
-    // 为了演示目的，我们暂时沿用获取导师课程的方法。
-    val courses by CourseRepository
-        .getCoursesForTutor(currentUserId) // 这里可能需要根据用户角色调整
-        .collectAsState(initial = emptyList())
+
 
     // 3. 获取当前用户的 UserProfile
     val currentUserProfile by produceState<UserProfile?>(initialValue = null, currentUserId) {
@@ -53,6 +46,21 @@ fun CourseListScreen(
             // 处理获取用户资料时的错误，例如日志记录或显示错误消息
             e.printStackTrace()
             value = null // 获取失败时设置为 null
+        }
+    }
+
+    // 2. 订阅课程列表
+    // 注意：这里的逻辑可能需要根据您的应用需求调整。
+    // 如果学生只能看到他们选的课程，您需要修改 CourseRepository.getCoursesForTutor
+    // 或者创建一个新的方法来获取学生相关的课程。
+    // 为了演示目的，我们暂时沿用获取导师课程的方法。
+    // CourseListScreen.kt (修改部分)
+    val courses by produceState<List<Course>>(initialValue = emptyList(), currentUserId, currentUserProfile) {
+        if (currentUserProfile?.role == "Tutor") {
+            CourseRepository.getCoursesForTutor(currentUserId).collect { value = it }
+        } else {
+            // 如果是学生或其他角色，获取所有课程
+            CourseRepository.getAllCourses().collect { value = it }
         }
     }
 

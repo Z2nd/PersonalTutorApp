@@ -1,10 +1,14 @@
 package uk.ac.soton.personal_tutor_app.data.repository
 
+//import androidx.paging.map
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.snapshots
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.tasks.await
 import uk.ac.soton.personal_tutor_app.data.model.Course
 
@@ -53,4 +57,15 @@ object CourseRepository {
             ?: throw IllegalArgumentException("课程 $id 不存在")
     }
 
+    fun getAllCourses(): Flow<List<Course>> {
+        // 实现从数据源获取所有课程的逻辑
+        // 例如：
+        return FirebaseFirestore.getInstance()
+            .collection("courses")
+            .snapshots()
+            .map { snapshot ->
+                snapshot.documents.mapNotNull { it.toObject(Course::class.java) }
+            }
+    }
 }
+
