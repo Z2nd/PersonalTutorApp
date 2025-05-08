@@ -1,3 +1,4 @@
+
 package uk.ac.soton.personal_tutor_app.ui.course
 
 import androidx.compose.foundation.clickable
@@ -28,20 +29,25 @@ fun CourseListScreen(
     val scope = rememberCoroutineScope()
     val snackbarHost = remember { SnackbarHostState() }
 
+    // All courses or tutor's courses
     var courses by remember { mutableStateOf<List<Course>>(emptyList()) }
     // Map<courseId, status>
-    var statuses by remember { mutableStateOf<Map<String,String>>(emptyMap()) }
+    var statuses by remember { mutableStateOf<Map<String, String>>(emptyMap()) }
     var isLoading by remember { mutableStateOf(true) }
     var error by remember { mutableStateOf<String?>(null) }
 
+    // Search query state
+    var searchQuery by remember { mutableStateOf("") }
+
     LaunchedEffect(userRole) {
-        isLoading = true; error = null
+        isLoading = true
+        error = null
         try {
             if (userRole == "Tutor") {
                 courses = CourseRepository.getCoursesByTutor(currentUid)
             } else {
                 courses = CourseRepository.getAllCourses()
-                // 拿一次所有 enrollment
+                // initial enrollment statuses for student
                 val list = EnrollmentRepository
                     .getEnrollmentsForStudent(currentUid)
                     .first()
@@ -60,18 +66,36 @@ fun CourseListScreen(
             } else if (error != null) {
                 Text("加载失败：$error", Modifier.align(Alignment.Center))
             } else {
-                Column {
+                Column(Modifier.fillMaxSize()) {
+                    // 搜索框
+                    var searchQuery by remember { mutableStateOf("") }
+                    OutlinedTextField(
+                        value = searchQuery,
+                        onValueChange = { searchQuery = it },
+                        label = { Text("搜索课程名称") },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp)
+                    )
+
+                    // 创建课程按钮（Tutor）
                     if (userRole == "Tutor") {
                         Button(
                             onClick = { navController.navigate("courseDetail/new/$userRole") },
                             Modifier
                                 .fillMaxWidth()
-                                .padding(16.dp)
+                                .padding(horizontal = 16.dp, vertical = 8.dp)
                         ) { Text("创建课程") }
                     }
 
+                    // 过滤课程列表
+                    val filteredCourses = remember(courses, searchQuery) {
+                        if (searchQuery.isBlank()) courses
+                        else courses.filter { it.title.contains(searchQuery, ignoreCase = true) }
+                    }
+
                     LazyColumn(Modifier.fillMaxSize().padding(16.dp)) {
-                        items(courses) { course ->
+                        items(filteredCourses) { course ->
                             val stat = statuses[course.id]
                             Row(
                                 Modifier
@@ -88,30 +112,30 @@ fun CourseListScreen(
                                         navController.navigate("enrollApproval/${course.id}")
                                     }) { Text("报名审批") }
                                 } else {
-                                    val (label, enabled) = when(stat) {
-                                        null       -> "报名" to true
-                                        "pending"  -> "已申请" to false
+                                    val (label, enabled) = when (stat) {
+                                        null -> "报名" to true
+                                        "pending" -> "已申请" to false
                                         "accepted" -> "已报名" to false
                                         "rejected" -> "已拒绝" to false
-                                        else       -> stat to false
+                                        else -> stat to false
                                     }
                                     OutlinedButton(
                                         onClick = {
                                             scope.launch {
                                                 try {
-                                                    EnrollmentRepository.createEnrollment(course.id, currentUid)
-                                                    // 更新本地状态
+                                                    EnrollmentRepository.createEnrollment(
+                                                        course.id,
+                                                        currentUid
+                                                    )
                                                     statuses = statuses + (course.id to "pending")
                                                     snackbarHost.showSnackbar("申请已发送")
-                                                } catch(e: Exception) {
+                                                } catch (e: Exception) {
                                                     snackbarHost.showSnackbar("申请失败：${e.message}")
                                                 }
                                             }
                                         },
                                         enabled = enabled
-                                    ) {
-                                        Text(label)
-                                    }
+                                    ) { Text(label) }
                                 }
                             }
                         }

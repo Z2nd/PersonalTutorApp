@@ -10,7 +10,8 @@ data class Lesson(
     val courseId: String = "",
     val title: String = "",
     val description: String = "",          // 课时简介
-    val pages: List<LessonPage> = emptyList()  // 最多 3 条学习资料
+    val pages: List<LessonPage> = emptyList(),  // 最多 3 条学习资料
+    val completed: Boolean = false
 )
 
 data class LessonPage(

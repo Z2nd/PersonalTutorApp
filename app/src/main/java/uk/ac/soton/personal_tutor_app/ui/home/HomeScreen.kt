@@ -16,7 +16,8 @@ fun HomeScreen(
     onLogout: () -> Unit,
     onViewCourses: () -> Unit,
     onNavigateProfile: () -> Unit,         // + 新增
-    onNavigateUserApproval: () -> Unit
+    onNavigateUserApproval: () -> Unit,
+    onNavigateDashboard: () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -51,6 +52,13 @@ fun HomeScreen(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text("学员审核")
+            }
+            Spacer(modifier = Modifier.height(16.dp))
+            Button(
+                onClick = onNavigateDashboard,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text("Dashboard")
             }
         }
     }

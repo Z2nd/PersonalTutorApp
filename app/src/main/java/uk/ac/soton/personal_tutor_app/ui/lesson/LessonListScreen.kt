@@ -1,61 +1,68 @@
+// File: LessonListScreen.kt
 package uk.ac.soton.personal_tutor_app.ui.lesson
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.*
+import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Divider
+import androidx.compose.material3.Text
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.*
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 import uk.ac.soton.personal_tutor_app.data.model.Lesson
+import uk.ac.soton.personal_tutor_app.data.repository.EnrollmentRepository
 import uk.ac.soton.personal_tutor_app.data.repository.LessonRepository
 import uk.ac.soton.personal_tutor_app.viewmodel.AuthViewModel
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LessonListScreen(
     navController: NavHostController,
     courseId: String,
     isTutor: Boolean
 ) {
-    // 获取用户角色
-    val authViewModel: AuthViewModel = viewModel()
-    val uiState by authViewModel.uiState.collectAsState()
-    val userRole = uiState.role
-
-    // 页面状态
+    val currentUid = FirebaseAuth.getInstance().currentUser?.uid.orEmpty()
+    val scope = rememberCoroutineScope()
     var lessons by remember { mutableStateOf<List<Lesson>>(emptyList()) }
+    var completedLessons by remember { mutableStateOf<List<String>>(emptyList()) }
+    var enrollmentId by remember { mutableStateOf("") }
     var isLoading by remember { mutableStateOf(true) }
     var error by remember { mutableStateOf<String?>(null) }
 
     // 拉取课时列表
     LaunchedEffect(courseId) {
-        isLoading = true
-        error = null
         LessonRepository.getLessonsForCourse(courseId)
-            .catch { e ->
-                error = e.message
-                isLoading = false
-            }
-            .collect { list ->
-                lessons = list
-                if (isLoading) isLoading = false
-            }
+            .catch { e -> error = e.message }
+            .collect { lessons = it }
+    }
+    // 拉取学生报名及完成列表
+    LaunchedEffect(currentUid) {
+        val enroll = EnrollmentRepository.getEnrollmentsForStudent(currentUid)
+            .first()
+            .firstOrNull { it.courseId == courseId }
+        if (enroll != null) {
+            enrollmentId = enroll.id
+            completedLessons = enroll.completedLessons
+        }
+        isLoading = false
     }
 
     Column(
-        modifier = Modifier
+        Modifier
             .fillMaxSize()
             .padding(16.dp)
     ) {
-        // Tutor 专属：创建新课时按钮
+        // Tutor 专属：创建新课时
         if (isTutor) {
             Button(
                 onClick = { navController.navigate("lessonDetail/new/$courseId") },
@@ -75,10 +82,7 @@ fun LessonListScreen(
             }
             error != null -> {
                 Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    Text(
-                        text = "加载课时失败：$error",
-                        color = MaterialTheme.colorScheme.error
-                    )
+                    Text("加载课时失败：$error", color = MaterialTheme.colorScheme.error)
                 }
             }
             lessons.isEmpty() -> {
@@ -87,26 +91,40 @@ fun LessonListScreen(
                 }
             }
             else -> {
-                LazyColumn(
-                    Modifier
-                        .fillMaxSize()
-                ) {
+                LazyColumn(Modifier.fillMaxSize()) {
                     items(lessons) { lesson ->
-                        Text(
-                            text = lesson.title,
-                            style = MaterialTheme.typography.bodyLarge,
-                            modifier = Modifier
+                        Row(
+                            Modifier
                                 .fillMaxWidth()
-                                .clickable {
-                                    // 跳转到详情（编辑 or 查看）
-                                    if (userRole == "Tutor") {
+                                .padding(vertical = 8.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            val done = lesson.id in completedLessons
+                            // Student 只能点已完成的，Tutor 全可点
+                            val canView = isTutor || done
+                            Text(
+                                text = lesson.title,
+                                style = MaterialTheme.typography.bodyLarge,
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .clickable(enabled = canView) {
                                         navController.navigate("lessonDetail/${lesson.id}/$courseId")
-                                    } else {
-                                        navController.navigate("lessonDetail/${lesson.id}/$courseId?isTutor=false")
                                     }
+                                    .padding(end = 8.dp)
+                            )
+                            if (isTutor) {
+                                Button(onClick = {
+                                    scope.launch {
+                                        LessonRepository.saveOrUpdate(
+                                            lesson.copy(completed = !lesson.completed)
+                                        )
+                                    }
+                                }) {
+                                    Text(if (lesson.completed) "已完成" else "未完成")
                                 }
-                                .padding(vertical = 8.dp)
-                        )
+                            }
+                        }
                         Divider()
                     }
                 }

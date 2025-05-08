@@ -20,6 +20,7 @@ import uk.ac.soton.personal_tutor_app.ui.auth.RegisterScreen
 import uk.ac.soton.personal_tutor_app.ui.home.HomeScreen
 import uk.ac.soton.personal_tutor_app.ui.course.CourseListScreen
 import uk.ac.soton.personal_tutor_app.ui.course.CourseDetailScreen
+import uk.ac.soton.personal_tutor_app.ui.dashboard.DashboardScreen
 import uk.ac.soton.personal_tutor_app.ui.profile.ProfileScreen
 import uk.ac.soton.personal_tutor_app.ui.tutor.TutorUserApprovalScreen
 import uk.ac.soton.personal_tutor_app.ui.tutor.EnrollApprovalScreen
@@ -100,7 +101,8 @@ class MainActivity : ComponentActivity() {
                                 },
                                 onViewCourses = { navController.navigate("courses") },
                                 onNavigateProfile = { navController.navigate("profile") },
-                                onNavigateUserApproval = { navController.navigate("userApproval") }
+                                onNavigateUserApproval = { navController.navigate("userApproval") },
+                                        onNavigateDashboard    = { navController.navigate("dashboard") }
                             )
                         }
                         // 课程列表
@@ -141,22 +143,16 @@ class MainActivity : ComponentActivity() {
                             EnrollApprovalScreen(courseId = cid)
                         }
                         // 课时列表
-                        // 课时列表
+
                         composable(
-                            "lessons/{courseId}/{isTutor}",
-                            arguments = listOf(
-                                navArgument("courseId") { type = NavType.StringType },
-                                navArgument("isTutor")   { type = NavType.BoolType }
-                            )
+                            "lessons/{courseId}",
+                            arguments = listOf(navArgument("courseId") { type = NavType.StringType })
                         ) { back ->
-                            val cid     = back.arguments!!.getString("courseId")!!
-                            val isTutor = back.arguments!!.getBoolean("isTutor")
-                            LessonListScreen(
-                                navController = navController,
-                                courseId     = cid,
-                                isTutor      = isTutor
-                            )
+                            val cid = back.arguments!!.getString("courseId")!!
+                            val isTutor = uiState.role == "Tutor"
+                            LessonListScreen(navController, cid, isTutor)
                         }
+
 
                         // 课时编辑/详情（Tutor）
                         composable(
@@ -168,14 +164,17 @@ class MainActivity : ComponentActivity() {
                         ) { back ->
                             val lid = back.arguments!!.getString("lessonId")!!
                             val cid = back.arguments!!.getString("courseId")!!
+                            // 根据当前登录状态再判断 isTutor
                             val isTutor = uiState.role == "Tutor"
                             LessonDetailScreen(
                                 navController = navController,
-                                lessonId = lid,
-                                courseId = cid,
-                                isTutor = isTutor
+                                lessonId      = lid,
+                                courseId      = cid,
+                                isTutor       = isTutor
                             )
                         }
+
+
                         // 课时内容（只读 Student）
                         composable(
                             "lessonContent/{lessonId}/{courseId}",
@@ -196,6 +195,9 @@ class MainActivity : ComponentActivity() {
                         // 我的资料
                         composable("profile") {
                             ProfileScreen(onBack = { navController.popBackStack() })
+                        }
+                        composable("dashboard") {
+                            DashboardScreen(navController)
                         }
                     }
                 }

@@ -13,5 +13,6 @@ data class Course(
     @DocumentId val id: String = "",
     val title: String = "",
     val description: String = "",
-    val tutorId: String = ""
+    val tutorId: String = "",
+    val category: String? = null      // <— new nullable field
 )

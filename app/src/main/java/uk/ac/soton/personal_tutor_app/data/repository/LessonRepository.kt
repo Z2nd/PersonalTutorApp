@@ -38,11 +38,10 @@ object LessonRepository {
 
     /** 新增或更新课时 */
     suspend fun saveOrUpdate(lesson: Lesson) {
-        if (lesson.id.isBlank()) {
-            lessonsRef.add(lesson.copy(id = "")).await()
-        } else {
-            lessonsRef.document(lesson.id).set(lesson).await()
-        }
+        if (lesson.id.isBlank())
+                 lessonsRef.add(lesson.copy(id="", completed=lesson.completed)).await()
+           else
+             lessonsRef.document(lesson.id).set(lesson).await()
     }
 
     /** 删除课时 */
