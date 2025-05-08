@@ -38,7 +38,7 @@ fun CourseListScreen(
 
 
 
-    // 3. 获取当前用户的 UserProfile
+    // 2. 获取当前用户的 UserProfile
     val currentUserProfile by produceState<UserProfile?>(initialValue = null, currentUserId) {
         try {
             value = UserRepository.getUserProfile(currentUserId)
@@ -49,7 +49,7 @@ fun CourseListScreen(
         }
     }
 
-    // 2. 订阅课程列表
+    // 3. 订阅课程列表
     // 注意：这里的逻辑可能需要根据您的应用需求调整。
     // 如果学生只能看到他们选的课程，您需要修改 CourseRepository.getCoursesForTutor
     // 或者创建一个新的方法来获取学生相关的课程。

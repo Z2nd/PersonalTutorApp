@@ -76,29 +76,32 @@ fun CourseDetailScreen(
         )
         Spacer(Modifier.height(16.dp))
 
-        // —— 保存 / 更新 按钮 ——
-        Button(
-            onClick = {
-                scope.launch {
-                    val tutorId = FirebaseAuth.getInstance().currentUser?.uid ?: return@launch
-                    val course = Course(
-                        id          = if (isNew) "" else courseId,
-                        title       = title,
-                        description = description,
-                        tutorId     = tutorId
-                    )
-                    if (isNew) CourseRepository.addCourse(course)
-                    else      CourseRepository.updateCourse(course)
-                    navController.popBackStack()
-                }
-            },
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text(if (isNew) "保存" else "更新")
+        // —— 保存 / 更新 按钮 （仅教师可见）——
+        if (userRole == "Tutor"){
+            Button(
+                onClick = {
+                    scope.launch {
+                        val tutorId = FirebaseAuth.getInstance().currentUser?.uid ?: return@launch
+                        val course = Course(
+                            id          = if (isNew) "" else courseId,
+                            title       = title,
+                            description = description,
+                            tutorId     = tutorId
+                        )
+                        if (isNew) CourseRepository.addCourse(course)
+                        else      CourseRepository.updateCourse(course)
+                        navController.popBackStack()
+                    }
+                },
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(if (isNew) "保存" else "更新")
+            }
         }
 
-        // —— 删除 按钮（仅编辑模式可见） ——
-        if (!isNew) {
+
+        // —— 删除 按钮（仅编辑模式&&教师可见） ——
+        if (userRole == "Tutor" && !isNew) {
             Spacer(Modifier.height(8.dp))
             Button(
                 onClick = {
@@ -131,10 +134,14 @@ fun CourseDetailScreen(
                 onClick = {
                     scope.launch {
                         val studentId = FirebaseAuth.getInstance().currentUser?.uid ?: return@launch
-                        EnrollmentRepository.createEnrollment(courseId, studentId)
+                        if (hasPending) {
+                            EnrollmentRepository.deleteEnrollment(courseId, studentId) // Call the delete function
+                        } else {
+                            EnrollmentRepository.createEnrollment(courseId, studentId)
+                        }
                     }
                 },
-                enabled = !hasPending,
+//                enabled = !hasPending,
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(if (hasPending) "已报名" else "报名")

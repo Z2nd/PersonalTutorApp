@@ -1,5 +1,7 @@
 package uk.ac.soton.personal_tutor_app.data.repository
 
+import android.util.Log
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.channels.awaitClose
@@ -17,6 +19,31 @@ object EnrollmentRepository {
     suspend fun createEnrollment(courseId: String, studentId: String) {
         val e = Enrollment(courseId = courseId, studentId = studentId)
         enrollmentsRef.add(e.copy(id = "")).await()
+    }
+
+    /** 学生取消报名 */
+    suspend fun deleteEnrollment(courseId: String, studentId: String) {
+        // Assuming you have a way to query enrollments by courseId and studentId
+        // and then delete the document.
+        // This is a placeholder, you'll need to implement the actual Firestore logic.
+        try {
+            // Example: Query for the enrollment document
+            val querySnapshot = FirebaseFirestore.getInstance()
+                .collection("enrollments")
+                .whereEqualTo("courseId", courseId)
+                .whereEqualTo("studentId", studentId)
+                .get()
+                .await()
+
+            // Delete the found document(s)
+            for (document in querySnapshot.documents) {
+                document.reference.delete().await()
+            }
+        } catch (e: Exception) {
+            // Handle potential errors
+            Log.e("EnrollmentRepository", "Error deleting enrollment", e)
+            throw e // Re-throw the exception or handle it as needed
+        }
     }
 
     /** 获取某课程所有报名（Tutor 用） */
