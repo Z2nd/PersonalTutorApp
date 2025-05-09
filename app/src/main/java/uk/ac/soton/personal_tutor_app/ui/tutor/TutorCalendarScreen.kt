@@ -17,44 +17,27 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import uk.ac.soton.personal_tutor_app.data.model.TutorAvailability
 import uk.ac.soton.personal_tutor_app.data.model.TimeSlot
+import uk.ac.soton.personal_tutor_app.data.repository.CalendarRepository
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TutorCalendarScreen(navController: NavHostController) {
     val currentUid = FirebaseAuth.getInstance().currentUser?.uid ?: return
-    val db = Firebase.firestore
     val scope = rememberCoroutineScope()
 
-    // State for tutor availability
     var tutorAvailability by remember { mutableStateOf<TutorAvailability?>(null) }
     var isLoading by remember { mutableStateOf(true) }
     var errorMessage by remember { mutableStateOf<String?>(null) }
+    var showDialog by remember { mutableStateOf(false) }
+    var startTime by remember { mutableStateOf("") }
+    var endTime by remember { mutableStateOf("") }
 
-    // Load tutor availability
     LaunchedEffect(currentUid) {
         isLoading = true
         errorMessage = null
         try {
-            val snapshot = db.collection("tutor_availability")
-                .whereEqualTo("tutorId", currentUid)
-                .get()
-                .await()
-
-            if (snapshot.isEmpty) {
-                // 如果没有文档，为当前 tutor 添加一个默认文档
-                val defaultAvailability = TutorAvailability(
-                    tutorId = currentUid,
-                    timeSlots = listOf(
-                        TimeSlot(start = Timestamp.now(), end = Timestamp.now())
-                    )
-                )
-                db.collection("tutor_availability")
-                    .add(defaultAvailability)
-                    .await()
-                tutorAvailability = defaultAvailability
-            } else {
-                tutorAvailability = snapshot.documents.first().toObject(TutorAvailability::class.java)
-            }
+            tutorAvailability = CalendarRepository.getTutorAvailability(currentUid)
+                ?: CalendarRepository.createDefaultAvailability(currentUid)
         } catch (e: Exception) {
             errorMessage = e.message
         }
@@ -76,31 +59,8 @@ fun TutorCalendarScreen(navController: NavHostController) {
                 )
                 tutorAvailability != null -> {
                     Column(Modifier.fillMaxSize().padding(16.dp)) {
-                        // Add new time slot button
                         Button(
-                            onClick = {
-                                scope.launch {
-                                    try {
-                                        val newSlot = TimeSlot(
-                                            start = Timestamp.now(),
-                                            end = Timestamp.now()
-                                        )
-                                        val updatedSlots = tutorAvailability!!.timeSlots + newSlot
-                                        db.collection("tutor_availability")
-                                            .whereEqualTo("tutorId", currentUid)
-                                            .get()
-                                            .await()
-                                            .documents
-                                            .first()
-                                            .reference
-                                            .update("timeSlots", updatedSlots)
-                                            .await()
-                                        tutorAvailability = tutorAvailability!!.copy(timeSlots = updatedSlots)
-                                    } catch (e: Exception) {
-                                        errorMessage = e.message
-                                    }
-                                }
-                            },
+                            onClick = { showDialog = true },
                             modifier = Modifier.fillMaxWidth()
                         ) {
                             Text("添加可用时间段")
@@ -108,7 +68,6 @@ fun TutorCalendarScreen(navController: NavHostController) {
 
                         Spacer(Modifier.height(16.dp))
 
-                        // Display time slots
                         LazyColumn {
                             items(tutorAvailability!!.timeSlots) { slot ->
                                 Row(
@@ -117,20 +76,14 @@ fun TutorCalendarScreen(navController: NavHostController) {
                                         .padding(vertical = 8.dp),
                                     horizontalArrangement = Arrangement.SpaceBetween
                                 ) {
-                                    Text("${slot.start} - ${slot.end}")
+                                    Text(
+                                        "Start time: ${CalendarRepository.formatTimestamp(slot.start)}\nEnd time: ${CalendarRepository.formatTimestamp(slot.end)}"
+                                    )
                                     Button(onClick = {
                                         scope.launch {
                                             try {
                                                 val updatedSlots = tutorAvailability!!.timeSlots - slot
-                                                db.collection("tutor_availability")
-                                                    .whereEqualTo("tutorId", currentUid)
-                                                    .get()
-                                                    .await()
-                                                    .documents
-                                                    .first()
-                                                    .reference
-                                                    .update("timeSlots", updatedSlots)
-                                                    .await()
+                                                CalendarRepository.updateTimeSlots(currentUid, updatedSlots)
                                                 tutorAvailability = tutorAvailability!!.copy(timeSlots = updatedSlots)
                                             } catch (e: Exception) {
                                                 errorMessage = e.message
@@ -145,6 +98,25 @@ fun TutorCalendarScreen(navController: NavHostController) {
                     }
                 }
             }
+        }
+
+        if (showDialog) {
+            AddTimeSlotDialog(
+                onDismiss = { showDialog = false },
+                onConfirm = { start, end ->
+                    scope.launch {
+                        try {
+                            val newSlot = TimeSlot(start = start, end = end)
+                            val updatedSlots = tutorAvailability!!.timeSlots + newSlot
+                            CalendarRepository.updateTimeSlots(currentUid, updatedSlots)
+                            tutorAvailability = tutorAvailability!!.copy(timeSlots = updatedSlots)
+                            showDialog = false
+                        } catch (e: Exception) {
+                            errorMessage = e.message
+                        }
+                    }
+                }
+            )
         }
     }
 }
