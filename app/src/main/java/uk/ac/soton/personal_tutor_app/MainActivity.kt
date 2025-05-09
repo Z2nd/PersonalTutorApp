@@ -135,13 +135,15 @@ class MainActivity : ComponentActivity() {
                         // 某门课程的报名审批（Tutor）
                         composable(
                             "enrollApproval/{courseId}",
-                            arguments = listOf(
-                                navArgument("courseId") { type = NavType.StringType }
-                            )
+                            arguments = listOf(navArgument("courseId"){ type = NavType.StringType })
                         ) { back ->
                             val cid = back.arguments!!.getString("courseId")!!
-                            EnrollApprovalScreen(courseId = cid)
+                            EnrollApprovalScreen(
+                                courseId    = cid,
+                                navController = navController   // ← 传入 navController
+                            )
                         }
+
                         // 课时列表
 
                         composable(

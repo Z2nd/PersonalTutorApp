@@ -15,7 +15,7 @@ object EnrollmentRepository {
 
     /** 学生发起报名 */
     suspend fun createEnrollment(courseId: String, studentId: String) {
-        val e = Enrollment(courseId = courseId, studentId = studentId)
+        val e = Enrollment(courseId = courseId, studentId = studentId,status    = "pending" )
         ref.add(e.copy(id = "")).await()
     }
 
