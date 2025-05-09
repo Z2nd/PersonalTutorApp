@@ -62,6 +62,7 @@ fun HomeScreen(
             ) {
                 Text("Dashboard")
             }
+            Spacer(modifier = Modifier.height(16.dp))
             Button(onClick = { onNavigateTutorCalendar() }, modifier = Modifier.fillMaxWidth()) {
                 Text("我的日历")
             }
