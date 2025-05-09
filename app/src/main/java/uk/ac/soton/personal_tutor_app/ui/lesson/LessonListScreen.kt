@@ -59,6 +59,7 @@ fun LessonListScreen(
 
     Column(
         Modifier
+            .systemBarsPadding()
             .fillMaxSize()
             .padding(16.dp)
     ) {

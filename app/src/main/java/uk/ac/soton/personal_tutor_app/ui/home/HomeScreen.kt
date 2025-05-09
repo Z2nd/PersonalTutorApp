@@ -21,6 +21,7 @@ fun HomeScreen(
 ) {
     Column(
         modifier = Modifier
+            .systemBarsPadding()
             .fillMaxSize()
             .padding(16.dp),
         verticalArrangement = Arrangement.Center,

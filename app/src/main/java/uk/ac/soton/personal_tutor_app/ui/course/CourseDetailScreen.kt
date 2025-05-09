@@ -74,6 +74,7 @@ fun CourseDetailScreen(
     Scaffold { padding ->
         Column(
             Modifier
+                .systemBarsPadding()
                 .fillMaxSize()
                 .padding(padding)
                 .padding(16.dp)

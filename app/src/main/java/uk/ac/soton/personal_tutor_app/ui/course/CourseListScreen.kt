@@ -123,7 +123,9 @@ fun CourseListScreen(
                     )
                 }
                 else -> {
-                    Column(Modifier.fillMaxSize()) {
+                    Column(Modifier
+                        .systemBarsPadding()
+                        .fillMaxSize()) {
                         // Search bar
                         OutlinedTextField(
                             value = searchQuery,

@@ -82,6 +82,7 @@ fun LessonDetailScreen(
     ) { padding ->
         Column(
             modifier = Modifier
+                .systemBarsPadding()
                 .padding(padding)
                 .padding(16.dp)
                 .verticalScroll(rememberScrollState())

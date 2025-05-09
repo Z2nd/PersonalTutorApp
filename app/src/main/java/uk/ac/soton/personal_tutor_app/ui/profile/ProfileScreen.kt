@@ -102,6 +102,7 @@ fun ProfileScreen(
             } else {
                 Column(
                     Modifier
+                        .systemBarsPadding()
                         .fillMaxSize()
                         .padding(16.dp),
                     horizontalAlignment = Alignment.CenterHorizontally

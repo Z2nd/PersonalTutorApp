@@ -51,7 +51,7 @@ fun DashboardScreen(navController: NavHostController) {
         enrollments.groupingBy { it.courseId }.eachCount()
     }
 
-    Column(Modifier.fillMaxSize().padding(16.dp)) {
+    Column(Modifier.fillMaxSize().padding(16.dp).systemBarsPadding()) {
         Text("Dashboard: 课程与已报名学生数", style = MaterialTheme.typography.titleLarge)
         Spacer(Modifier.height(16.dp))
 
