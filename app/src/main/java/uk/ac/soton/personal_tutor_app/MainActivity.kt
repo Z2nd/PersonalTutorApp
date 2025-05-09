@@ -27,6 +27,7 @@ import uk.ac.soton.personal_tutor_app.ui.tutor.EnrollApprovalScreen
 import uk.ac.soton.personal_tutor_app.ui.lesson.LessonListScreen
 import uk.ac.soton.personal_tutor_app.ui.lesson.LessonDetailScreen
 import uk.ac.soton.personal_tutor_app.ui.theme.PersonalTutorAppTheme
+import uk.ac.soton.personal_tutor_app.ui.tutor.TutorCalendarScreen
 import uk.ac.soton.personal_tutor_app.viewmodel.AuthViewModel
 
 class MainActivity : ComponentActivity() {
@@ -102,7 +103,8 @@ class MainActivity : ComponentActivity() {
                                 onViewCourses = { navController.navigate("courses") },
                                 onNavigateProfile = { navController.navigate("profile") },
                                 onNavigateUserApproval = { navController.navigate("userApproval") },
-                                        onNavigateDashboard    = { navController.navigate("dashboard") }
+                                onNavigateDashboard = { navController.navigate("dashboard") },
+                                onNavigateTutorCalendar = { navController.navigate("tutorCalendar") }
                             )
                         }
                         // 课程列表
@@ -200,6 +202,9 @@ class MainActivity : ComponentActivity() {
                         }
                         composable("dashboard") {
                             DashboardScreen(navController)
+                        }
+                        composable("tutorCalendar") {
+                            TutorCalendarScreen(navController = navController)
                         }
                     }
                 }

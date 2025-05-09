@@ -17,7 +17,8 @@ fun HomeScreen(
     onViewCourses: () -> Unit,
     onNavigateProfile: () -> Unit,         // + 新增
     onNavigateUserApproval: () -> Unit,
-    onNavigateDashboard: () -> Unit
+    onNavigateDashboard: () -> Unit,
+    onNavigateTutorCalendar: () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -60,6 +61,9 @@ fun HomeScreen(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text("Dashboard")
+            }
+            Button(onClick = { onNavigateTutorCalendar() }, modifier = Modifier.fillMaxWidth()) {
+                Text("我的日历")
             }
         }
     }
