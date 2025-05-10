@@ -57,7 +57,9 @@ fun StudentMeetingScreen(navController: NavHostController) {
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Text(text = tutor.displayName ?: "未知导师", modifier = Modifier.weight(1f))
-                            Button(onClick = { /* 暂不实现 */ }) {
+                            Button(onClick = {
+                                navController.navigate("tutorAvailableSlots/${tutor.id}")
+                            }) {
                                 Text("查看日历")
                             }
                         }
