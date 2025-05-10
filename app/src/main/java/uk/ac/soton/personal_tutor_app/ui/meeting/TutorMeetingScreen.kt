@@ -1,4 +1,4 @@
-package uk.ac.soton.personal_tutor_app.ui.tutor
+package uk.ac.soton.personal_tutor_app.ui.meeting
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -9,15 +9,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.tasks.await
 import uk.ac.soton.personal_tutor_app.data.model.TutorAvailability
 import uk.ac.soton.personal_tutor_app.data.model.TimeSlot
 import uk.ac.soton.personal_tutor_app.data.repository.CalendarRepository
+import uk.ac.soton.personal_tutor_app.ui.meeting.calendar.AddTimeSlotDialog
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -49,7 +46,10 @@ fun TutorCalendarScreen(navController: NavHostController) {
             TopAppBar(title = { Text("我的日历") })
         }
     ) { padding ->
-        Box(Modifier.fillMaxSize().padding(padding)) {
+        Box(Modifier
+            .systemBarsPadding()
+            .fillMaxSize()
+            .padding(padding)) {
             when {
                 isLoading -> CircularProgressIndicator(Modifier.align(Alignment.Center))
                 errorMessage != null -> Text(

@@ -75,4 +75,20 @@ object UserRepository {
         usersRef.document(profile.id).set(profile).await()
     }
 
+    /** 获取所有已审核的导师 */
+    suspend fun getAllTutors(): Flow<List<UserProfile>> = callbackFlow {
+        val sub = usersRef
+            .whereEqualTo("role", "Tutor")
+            .whereEqualTo("approved", true)
+            .whereEqualTo("rejected", false)
+            .addSnapshotListener { snap, err ->
+                if (err != null) { close(err); return@addSnapshotListener }
+                val list = snap?.documents
+                    ?.mapNotNull { it.toObject(UserProfile::class.java) }
+                    ?: emptyList()
+                trySend(list)
+            }
+        awaitClose { sub.remove() }
+    }
+
 }

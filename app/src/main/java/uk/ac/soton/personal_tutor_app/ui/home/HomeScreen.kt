@@ -18,7 +18,8 @@ fun HomeScreen(
     onNavigateProfile: () -> Unit,         // + 新增
     onNavigateUserApproval: () -> Unit,
     onNavigateDashboard: () -> Unit,
-    onNavigateTutorCalendar: () -> Unit
+    onNavigateTutorCalendar: () -> Unit,
+    onNavigateStudentMeeting: () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -65,6 +66,10 @@ fun HomeScreen(
             Spacer(modifier = Modifier.height(16.dp))
             Button(onClick = { onNavigateTutorCalendar() }, modifier = Modifier.fillMaxWidth()) {
                 Text("我的日历")
+            }
+        }else{
+            Button(onClick = onNavigateStudentMeeting, modifier = Modifier.fillMaxWidth()) {
+                Text("查看导师日历")
             }
         }
     }

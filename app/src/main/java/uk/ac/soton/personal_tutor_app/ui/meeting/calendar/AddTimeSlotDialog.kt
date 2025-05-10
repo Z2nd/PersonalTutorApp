@@ -1,4 +1,4 @@
-package uk.ac.soton.personal_tutor_app.ui.tutor
+package uk.ac.soton.personal_tutor_app.ui.meeting.calendar
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
