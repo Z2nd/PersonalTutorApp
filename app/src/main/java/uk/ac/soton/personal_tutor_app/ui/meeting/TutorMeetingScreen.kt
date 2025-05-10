@@ -15,6 +15,7 @@ import uk.ac.soton.personal_tutor_app.data.model.TutorAvailability
 import uk.ac.soton.personal_tutor_app.data.model.TimeSlot
 import uk.ac.soton.personal_tutor_app.data.repository.CalendarRepository
 import uk.ac.soton.personal_tutor_app.ui.meeting.calendar.AddTimeSlotDialog
+import uk.ac.soton.personal_tutor_app.ui.meeting.calendar.ManageTimeSlotDialog
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -28,6 +29,9 @@ fun TutorCalendarScreen(navController: NavHostController) {
     var showDialog by remember { mutableStateOf(false) }
     var startTime by remember { mutableStateOf("") }
     var endTime by remember { mutableStateOf("") }
+    var selectedTimeSlot by remember { mutableStateOf<TimeSlot?>(null) }
+    var addTimeSlot by remember { mutableStateOf(false) }
+
 
     LaunchedEffect(currentUid) {
         isLoading = true
@@ -60,7 +64,9 @@ fun TutorCalendarScreen(navController: NavHostController) {
                 tutorAvailability != null -> {
                     Column(Modifier.fillMaxSize().padding(16.dp)) {
                         Button(
-                            onClick = { showDialog = true },
+                            onClick = {
+                                showDialog = true
+                                addTimeSlot = true },
                             modifier = Modifier.fillMaxWidth()
                         ) {
                             Text("添加可用时间段")
@@ -80,17 +86,10 @@ fun TutorCalendarScreen(navController: NavHostController) {
                                         "Start time: ${CalendarRepository.formatTimestamp(slot.start)}\nEnd time: ${CalendarRepository.formatTimestamp(slot.end)}"
                                     )
                                     Button(onClick = {
-                                        scope.launch {
-                                            try {
-                                                val updatedSlots = tutorAvailability!!.timeSlots - slot
-                                                CalendarRepository.updateTimeSlots(currentUid, updatedSlots)
-                                                tutorAvailability = tutorAvailability!!.copy(timeSlots = updatedSlots)
-                                            } catch (e: Exception) {
-                                                errorMessage = e.message
-                                            }
-                                        }
+                                        selectedTimeSlot = slot
+                                        showDialog = true
                                     }) {
-                                        Text("删除")
+                                        Text("管理")
                                     }
                                 }
                             }
@@ -101,22 +100,44 @@ fun TutorCalendarScreen(navController: NavHostController) {
         }
 
         if (showDialog) {
-            AddTimeSlotDialog(
-                onDismiss = { showDialog = false },
-                onConfirm = { start, end ->
-                    scope.launch {
-                        try {
-                            val newSlot = TimeSlot(start = start, end = end)
-                            val updatedSlots = tutorAvailability!!.timeSlots + newSlot
-                            CalendarRepository.updateTimeSlots(currentUid, updatedSlots)
-                            tutorAvailability = tutorAvailability!!.copy(timeSlots = updatedSlots)
-                            showDialog = false
-                        } catch (e: Exception) {
-                            errorMessage = e.message
+            if (selectedTimeSlot != null) {
+                ManageTimeSlotDialog(
+                    timeSlot = selectedTimeSlot!!,
+                    onDismiss = {
+                        showDialog = false
+                        selectedTimeSlot = null},
+                    onDelete = {
+                        scope.launch {
+                            try {
+                                val updatedSlots = tutorAvailability!!.timeSlots - selectedTimeSlot!!
+                                CalendarRepository.updateTimeSlots(currentUid, updatedSlots)
+                                tutorAvailability = tutorAvailability!!.copy(timeSlots = updatedSlots)
+                                showDialog = false
+                            } catch (e: Exception) {
+                                errorMessage = e.message
+                            }
                         }
                     }
-                }
-            )
+                )
+            }else if(addTimeSlot) {
+                AddTimeSlotDialog(
+                    onDismiss = { showDialog = false },
+                    onConfirm = { start, end ->
+                        scope.launch {
+                            try {
+                                val newSlot = TimeSlot(start = start, end = end)
+                                val updatedSlots = tutorAvailability!!.timeSlots + newSlot
+                                CalendarRepository.updateTimeSlots(currentUid, updatedSlots)
+                                tutorAvailability =
+                                    tutorAvailability!!.copy(timeSlots = updatedSlots)
+                                showDialog = false
+                            } catch (e: Exception) {
+                                errorMessage = e.message
+                            }
+                        }
+                    }
+                )
+            }
         }
     }
 }
