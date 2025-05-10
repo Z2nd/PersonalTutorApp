@@ -12,12 +12,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.google.firebase.auth.FirebaseAuth
+import kotlinx.coroutines.launch
 import uk.ac.soton.personal_tutor_app.data.model.TimeSlot
 import uk.ac.soton.personal_tutor_app.data.repository.CalendarRepository
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TutorAvailableSlotsScreen(navController: NavHostController, tutorId: String) {
+    var currentId = FirebaseAuth.getInstance().currentUser?.uid ?: return
     val scope = rememberCoroutineScope()
     var timeSlots by remember { mutableStateOf<List<TimeSlot>>(emptyList()) }
     var isLoading by remember { mutableStateOf(true) }
@@ -70,8 +73,39 @@ fun TutorAvailableSlotsScreen(navController: NavHostController, tutorId: String)
                                 Text(
                                     "开始时间: ${CalendarRepository.formatTimestamp(slot.start)}\n结束时间: ${CalendarRepository.formatTimestamp(slot.end)}"
                                 )
-                                Button(onClick = { /* 实现预约逻辑 */ }) {
-                                    Text("预约")
+                                Button(
+                                    onClick = {
+                                        if (slot.isAvailable) {
+                                            scope.launch {
+                                                try {
+                                                    val success = CalendarRepository.bookTimeSlot(
+                                                        tutorId = tutorId,
+                                                        timeSlot = slot,
+                                                        studentId = currentId
+                                                    )
+                                                    if (success) {
+                                                        timeSlots = timeSlots.map {
+                                                            if (it.start == slot.start && it.end == slot.end) {
+                                                                it.copy(isAvailable = false)
+                                                            } else {
+                                                                it
+                                                            }
+                                                        }
+                                                    } else {
+                                                        errorMessage = "预约失败，时间段不可用。"
+                                                    }
+                                                } catch (e: Exception) {
+                                                    errorMessage = "预约失败：${e.message}"
+                                                }
+                                            }
+                                        }
+                                    },
+                                    enabled = slot.isAvailable,
+                                    colors = ButtonDefaults.buttonColors(
+                                        containerColor = if (slot.isAvailable) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondary
+                                    )
+                                ) {
+                                    Text(if (slot.isAvailable) "预约" else "已预约")
                                 }
                             }
                         }

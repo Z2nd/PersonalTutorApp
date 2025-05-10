@@ -41,4 +41,29 @@ object CalendarRepository {
         val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault())
         return sdf.format(timestamp.toDate())
     }
+
+    /** 学生预约导师的可用时间段 */
+    suspend fun bookTimeSlot(tutorId: String, timeSlot: TimeSlot, studentId: String): Boolean {
+        val snapshot = collection.whereEqualTo("tutorId", tutorId).get().await()
+        if (snapshot.isEmpty) return false
+
+        val document = snapshot.documents.first()
+        val tutorAvailability = document.toObject(TutorAvailability::class.java) ?: return false
+
+        val updatedTimeSlots = tutorAvailability.timeSlots.map {
+            if (it.start == timeSlot.start && it.end == timeSlot.end && it.isAvailable) {
+                it.copy(isAvailable = false, studentId = studentId)
+            } else {
+                it
+            }
+        }
+
+        if (updatedTimeSlots == tutorAvailability.timeSlots) {
+            // 没有找到匹配的可用时间段
+            return false
+        }
+
+        document.reference.update("timeSlots", updatedTimeSlots).await()
+        return true
+    }
 }
