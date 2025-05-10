@@ -20,7 +20,7 @@ import uk.ac.soton.personal_tutor_app.data.repository.CalendarRepository
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TutorAvailableSlotsScreen(navController: NavHostController, tutorId: String) {
-    var currentId = FirebaseAuth.getInstance().currentUser?.uid ?: return
+    val currentId = FirebaseAuth.getInstance().currentUser?.uid ?: return
     val scope = rememberCoroutineScope()
     var timeSlots by remember { mutableStateOf<List<TimeSlot>>(emptyList()) }
     var isLoading by remember { mutableStateOf(true) }
@@ -73,9 +73,10 @@ fun TutorAvailableSlotsScreen(navController: NavHostController, tutorId: String)
                                 Text(
                                     "开始时间: ${CalendarRepository.formatTimestamp(slot.start)}\n结束时间: ${CalendarRepository.formatTimestamp(slot.end)}"
                                 )
+
                                 Button(
                                     onClick = {
-                                        if (slot.isAvailable) {
+                                        if (slot.available) {
                                             scope.launch {
                                                 try {
                                                     val success = CalendarRepository.bookTimeSlot(
@@ -86,7 +87,7 @@ fun TutorAvailableSlotsScreen(navController: NavHostController, tutorId: String)
                                                     if (success) {
                                                         timeSlots = timeSlots.map {
                                                             if (it.start == slot.start && it.end == slot.end) {
-                                                                it.copy(isAvailable = false)
+                                                                it.copy(available = false)
                                                             } else {
                                                                 it
                                                             }
@@ -100,12 +101,12 @@ fun TutorAvailableSlotsScreen(navController: NavHostController, tutorId: String)
                                             }
                                         }
                                     },
-                                    enabled = slot.isAvailable,
+                                    enabled = slot.available,
                                     colors = ButtonDefaults.buttonColors(
-                                        containerColor = if (slot.isAvailable) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondary
+                                        containerColor = if (slot.available) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondary
                                     )
                                 ) {
-                                    Text(if (slot.isAvailable) "预约" else "已预约")
+                                    Text(if (slot.available) "预约" else "已预约")
                                 }
                             }
                         }

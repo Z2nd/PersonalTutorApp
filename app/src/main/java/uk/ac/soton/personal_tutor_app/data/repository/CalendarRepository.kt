@@ -51,8 +51,8 @@ object CalendarRepository {
         val tutorAvailability = document.toObject(TutorAvailability::class.java) ?: return false
 
         val updatedTimeSlots = tutorAvailability.timeSlots.map {
-            if (it.start == timeSlot.start && it.end == timeSlot.end && it.isAvailable) {
-                it.copy(isAvailable = false, studentId = studentId)
+            if (it.start == timeSlot.start && it.end == timeSlot.end && it.available) {
+                it.copy(available = false, studentId = studentId)
             } else {
                 it
             }

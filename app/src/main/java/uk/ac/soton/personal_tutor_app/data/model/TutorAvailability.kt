@@ -13,6 +13,6 @@ data class TutorAvailability(
 data class TimeSlot(
     val start: Timestamp = Timestamp.now(),
     val end: Timestamp = Timestamp.now(),
-    val isAvailable: Boolean = true,
+    val available: Boolean = true,
     val studentId: String = ""
 )
