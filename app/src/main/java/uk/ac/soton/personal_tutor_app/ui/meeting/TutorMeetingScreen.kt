@@ -51,7 +51,6 @@ fun TutorCalendarScreen(navController: NavHostController) {
         }
     ) { padding ->
         Box(Modifier
-            .systemBarsPadding()
             .fillMaxSize()
             .padding(padding)) {
             when {
