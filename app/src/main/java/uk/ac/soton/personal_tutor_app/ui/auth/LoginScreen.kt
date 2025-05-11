@@ -11,7 +11,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import uk.ac.soton.personal_tutor_app.viewmodel.AuthViewModel
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.unit.dp
-import uk.ac.soton.personal_tutor_app.data.repository.sendTestEmail
 
 
 @Composable
@@ -67,13 +66,6 @@ fun LoginScreen(
             } else {
                 Text("Login")
             }
-        }
-        Button(
-            onClick = { sendTestEmail() },
-            enabled = !uiState.isLoading,
-            modifier = Modifier.fillMaxWidth()
-        ){
-            Text("email test")
         }
         Spacer(modifier = Modifier.height(8.dp))
         TextButton(onClick = onNavigateToRegister, modifier = Modifier.align(Alignment.CenterHorizontally)) {

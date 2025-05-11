@@ -102,8 +102,9 @@ fun LessonListScreen(
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
                             val done = lesson.id in completedLessons
-                            // Student 只能点已完成的，Tutor 全可点
-                            val canView = isTutor || done
+//                            // Student 只能点已完成的，Tutor 全可点
+//                            val canView = isTutor || done
+                            val canView = true // 允许所有用户点击课时
                             Text(
                                 text = lesson.title,
                                 style = MaterialTheme.typography.bodyLarge,
