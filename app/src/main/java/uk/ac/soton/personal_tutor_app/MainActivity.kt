@@ -39,6 +39,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
+        initializeAppCheck()
+
         firebaseAuth.addAuthStateListener { auth ->
             Log.d("FIREBASE_TEST", "currentUser=${auth.currentUser?.uid}")
         }
