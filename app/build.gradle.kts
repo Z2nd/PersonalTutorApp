@@ -47,6 +47,8 @@ dependencies {
     implementation("com.google.firebase:firebase-auth-ktx")
     implementation("com.google.firebase:firebase-firestore-ktx")
     implementation("com.google.firebase:firebase-storage-ktx")
+    implementation("com.google.firebase:firebase-functions-ktx:20.3.1")
+    implementation("com.google.firebase:firebase-appcheck-playintegrity:17.0.1")
 
     /* ---------- Jetpack Compose ---------- */
     implementation("androidx.activity:activity-compose:1.9.0")
