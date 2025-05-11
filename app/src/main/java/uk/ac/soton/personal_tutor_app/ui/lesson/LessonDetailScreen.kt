@@ -2,9 +2,12 @@
 package uk.ac.soton.personal_tutor_app.ui.lesson
 
 import android.app.Activity
+import android.content.Intent
+import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -27,7 +30,6 @@ import androidx.navigation.NavHostController
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.ui.platform.LocalContext
-import coil.compose.AsyncImage
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.flow.first
@@ -37,6 +39,9 @@ import uk.ac.soton.personal_tutor_app.data.model.LessonPage
 import uk.ac.soton.personal_tutor_app.data.repository.EnrollmentRepository
 import uk.ac.soton.personal_tutor_app.data.repository.LessonRepository
 import uk.ac.soton.personal_tutor_app.utils.FilePicker
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.graphics.Color
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -125,41 +130,43 @@ fun LessonDetailScreen(
                     modifier = Modifier.fillMaxWidth()
                 )
                 page.imageUrl?.let { url ->
-                    AsyncImage(
-                        model = url,
-                        contentDescription = null,
+                    val fileName = url.substringAfterLast("%").substringBeforeLast("?")
+                    Text(
+                        text = AnnotatedString(
+                            text = "当前文件: $fileName",
+                            spanStyle = androidx.compose.ui.text.SpanStyle(
+                                color = Color.Blue,
+                                textDecoration = TextDecoration.Underline
+                            )
+                        ),
+                        style = MaterialTheme.typography.bodyMedium,
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .height(150.dp)
                             .padding(vertical = 8.dp)
+                            .clickable {
+                                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                                context.startActivity(intent)
+                            }
                     )
                 }
                 if (isTutor) {
                     Button(onClick = {
                         filePicker.registerFilePicker(launcher) { uri ->
-                            val contentResolver = context.contentResolver
-                            val fileSize = contentResolver.openFileDescriptor(uri, "r")?.statSize ?: -1
-                            println("Selected file size: $fileSize bytes")
-
-                            // 获取 Firebase Storage 实例
                             val storage = FirebaseStorage.getInstance()
                             val storageRef = storage.reference
                             val pdfRef = storageRef.child("pdfs/${System.currentTimeMillis()}.pdf")
 
-                            // 上传文件
                             val uploadTask = pdfRef.putFile(uri)
                             uploadTask.addOnSuccessListener {
-                                // 获取下载 URL
                                 pdfRef.downloadUrl.addOnSuccessListener { downloadUrl ->
                                     println("File uploaded successfully: $downloadUrl")
-                                    // TODO: 将下载 URL 保存到页面数据中
+                                    pages[idx] = pages[idx].copy(imageUrl = downloadUrl.toString())
                                 }
                             }.addOnFailureListener { exception ->
                                 println("File upload failed: ${exception.message}")
                             }
                         }
                     }) {
-                        Text("上传/替换 PDF")
+                        Text(if (page.imageUrl.isNullOrEmpty()) "上传 PDF" else "替换 PDF")
                     }
                 }
                 Spacer(Modifier.height(12.dp))
