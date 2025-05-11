@@ -1,0 +1,148 @@
+[debug] [2025-05-11T02:58:32.679Z] ----------------------------------------------------------------------
+[debug] [2025-05-11T02:58:32.687Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Joe Zheng\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js functions:shell
+[debug] [2025-05-11T02:58:32.688Z] CLI Version:   14.3.1
+[debug] [2025-05-11T02:58:32.688Z] Platform:      win32
+[debug] [2025-05-11T02:58:32.688Z] Node Version:  v22.11.0
+[debug] [2025-05-11T02:58:32.689Z] Time:          Sun May 11 2025 03:58:32 GMT+0100 (英国夏令时间)
+[debug] [2025-05-11T02:58:32.689Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2025-05-11T02:58:32.971Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-05-11T02:58:32.972Z] > authorizing via signed-in user (joezheng5@gmail.com)
+[debug] [2025-05-11T02:58:32.972Z] [iam] checking project personaltutorapp-dev for permissions ["firebase.projects.get"]
+[debug] [2025-05-11T02:58:32.973Z] Checked if tokens are valid: true, expires at: 1746935393122
+[debug] [2025-05-11T02:58:32.974Z] Checked if tokens are valid: true, expires at: 1746935393122
+[debug] [2025-05-11T02:58:32.975Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/personaltutorapp-dev:testIamPermissions [none]
+[debug] [2025-05-11T02:58:32.975Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/personaltutorapp-dev:testIamPermissions x-goog-quota-user=projects/personaltutorapp-dev
+[debug] [2025-05-11T02:58:32.975Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/personaltutorapp-dev:testIamPermissions {"permissions":["firebase.projects.get"]}
+[debug] [2025-05-11T02:58:33.691Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/personaltutorapp-dev:testIamPermissions 200
+[debug] [2025-05-11T02:58:33.691Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/personaltutorapp-dev:testIamPermissions {"permissions":["firebase.projects.get"]}
+[debug] [2025-05-11T02:58:33.700Z] [functions] Functions Emulator only supports listening on one address (127.0.0.1). Not listening on ::1
+[debug] [2025-05-11T02:58:33.725Z] defaultcredentials: writing to file C:\Users\Joe Zheng\AppData\Roaming\firebase\joezheng5_gmail_com_application_default_credentials.json
+[debug] [2025-05-11T02:58:33.729Z] DEBUG: Setting GAC to C:\Users\Joe Zheng\AppData\Roaming\firebase\joezheng5_gmail_com_application_default_credentials.json
+[debug] [2025-05-11T02:58:33.729Z] Checked if tokens are valid: true, expires at: 1746935393122
+[debug] [2025-05-11T02:58:33.729Z] Checked if tokens are valid: true, expires at: 1746935393122
+[debug] [2025-05-11T02:58:33.730Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/personaltutorapp-dev/adminSdkConfig [none]
+[debug] [2025-05-11T02:58:34.480Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/personaltutorapp-dev/adminSdkConfig 200
+[debug] [2025-05-11T02:58:34.480Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/personaltutorapp-dev/adminSdkConfig {"projectId":"personaltutorapp-dev","storageBucket":"personaltutorapp-dev.firebasestorage.app"}
+[debug] [2025-05-11T02:58:34.492Z] [functions] Watching "E:\Coding_Practice\AndroidStudioProjects\PersonalTutorApp\functions" for Cloud Functions...
+[debug] [2025-05-11T02:58:34.497Z] Validating nodejs source
+[debug] [2025-05-11T02:58:36.227Z] > [functions] package.json contents: {
+  "name": "functions",
+  "description": "Cloud Functions for Firebase",
+  "scripts": {
+    "lint": "eslint .",
+    "serve": "firebase emulators:start --only functions",
+    "shell": "firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "22"
+  },
+  "main": "index.js",
+  "dependencies": {
+    "firebase-admin": "^13.3.0",
+    "firebase-functions": "^6.3.2",
+    "nodemailer": "^7.0.3"
+  },
+  "devDependencies": {
+    "eslint": "^8.15.0",
+    "eslint-config-google": "^0.14.0",
+    "firebase-functions-test": "^3.1.0"
+  },
+  "private": true
+}
+[debug] [2025-05-11T02:58:36.228Z] Building nodejs source
+[debug] [2025-05-11T02:58:36.228Z] Failed to find version of module node: reached end of search path E:\Coding_Practice\AndroidStudioProjects\PersonalTutorApp\functions\node_modules
+[info] +  functions: Using node@22 from host. 
+[info] i  functions: Loaded environment variables from .env. 
+[debug] [2025-05-11T02:58:36.232Z] Could not find functions.yaml. Must use http discovery
+[debug] [2025-05-11T02:58:36.248Z] Found firebase-functions binary at 'E:\Coding_Practice\AndroidStudioProjects\PersonalTutorApp\functions\node_modules\.bin\firebase-functions'
+[info] Serving at port 8310
+
+[error] (node:81944) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+[debug] [2025-05-11T02:58:38.236Z] Got response from /__/functions.yaml {"endpoints":{"sendMail":{"availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":null,"ingressSettings":null,"concurrency":null,"serviceAccountEmail":null,"vpc":null,"platform":"gcfv2","labels":{},"callableTrigger":{},"entryPoint":"sendMail"}},"specVersion":"v1alpha1","requiredAPIs":[],"extensions":{}}
+[debug] [2025-05-11T02:58:42.286Z] [functions] Loaded functions definitions from source: sendMail.
+[debug] [2025-05-11T02:58:42.287Z] [functions[us-central1-sendMail]] http function initialized (http://127.0.0.1:5000/personaltutorapp-dev/us-central1/sendMail).
+[info] i  functions: Loaded functions: sendMail 
+[warn] !  functions: The following emulators are not running, calls to these services will affect production: firestore, database, pubsub, storage, eventarc, tasks 
+[debug] [2025-05-11T02:58:47.368Z] >>> [apiv2][query] POST http://127.0.0.1:5000/personaltutorapp-dev/us-central1/sendMail/ [none]
+[debug] [2025-05-11T02:58:47.368Z] >>> [apiv2][body] POST http://127.0.0.1:5000/personaltutorapp-dev/us-central1/sendMail/ {"data":{"to":"joezheng5@gmail.com","subject":"Test Email","content":"This is a test"}}
+[debug] [2025-05-11T02:58:47.374Z] [work-queue] {"queuedWork":["/personaltutorapp-dev/us-central1/sendMail/-2025-05-11T02:58:47.374Z"],"queueLength":1,"runningWork":[],"workRunningCount":0}
+[debug] [2025-05-11T02:58:47.374Z] [work-queue] {"queuedWork":[],"queueLength":0,"runningWork":["/personaltutorapp-dev/us-central1/sendMail/-2025-05-11T02:58:47.374Z"],"workRunningCount":1}
+[debug] [2025-05-11T02:58:47.375Z] Accepted request POST /personaltutorapp-dev/us-central1/sendMail/ --> us-central1-sendMail
+[debug] [2025-05-11T02:58:47.378Z] DEBUG: [functions] Runtime ready! Sending request!
+[debug] [2025-05-11T02:58:47.378Z] DEBUG: [functions] Got req.url=/personaltutorapp-dev/us-central1/sendMail/, mapping to path=/
+[info] i  functions: Loaded environment variables from .env. 
+[debug] [2025-05-11T02:58:47.396Z] DEBUG: [worker-pool] addWorker(us-central1-sendMail)
+[debug] [2025-05-11T02:58:47.398Z] DEBUG: [worker-pool] Adding worker with key us-central1-sendMail, total=1
+[info] >  (node:82480) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead. {"user":"(node:82480) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-sendMail"},"extension":{},"message":"\u001b[90m> \u001b[39m (node:82480) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead."}}
+[info] >  (Use `node --trace-deprecation ...` to show where the warning was created) {"user":"(Use `node --trace-deprecation ...` to show where the warning was created)","metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-sendMail"},"extension":{},"message":"\u001b[90m> \u001b[39m (Use `node --trace-deprecation ...` to show where the warning was created)"}}
+[debug] [2025-05-11T02:58:49.446Z] DEBUG: [runtime-status] [82480] Resolved module firebase-admin {"declared":true,"installed":true,"version":"13.3.0","resolution":"E:\\Coding_Practice\\AndroidStudioProjects\\PersonalTutorApp\\functions\\node_modules\\firebase-admin\\lib\\index.js"}
+[debug] [2025-05-11T02:58:49.449Z] DEBUG: [runtime-status] [82480] Resolved module firebase-functions {"declared":true,"installed":true,"version":"6.3.2","resolution":"E:\\Coding_Practice\\AndroidStudioProjects\\PersonalTutorApp\\functions\\node_modules\\firebase-functions\\lib\\v2\\index.js"}
+[debug] [2025-05-11T02:58:49.450Z] DEBUG: [runtime-status] [82480] Outgoing network have been stubbed. [{"name":"http","status":"mocked"},{"name":"http","status":"mocked"},{"name":"https","status":"mocked"},{"name":"https","status":"mocked"},{"name":"net","status":"mocked"}]
+[debug] [2025-05-11T02:58:49.452Z] DEBUG: [runtime-status] [82480] Resolved module firebase-functions {"declared":true,"installed":true,"version":"6.3.2","resolution":"E:\\Coding_Practice\\AndroidStudioProjects\\PersonalTutorApp\\functions\\node_modules\\firebase-functions\\lib\\v2\\index.js"}
+[debug] [2025-05-11T02:58:50.746Z] DEBUG: [runtime-status] [82480] Checked functions.config() {"config":{}}
+[debug] [2025-05-11T02:58:50.746Z] DEBUG: [runtime-status] [82480] firebase-functions has been stubbed. {"functionsResolution":{"declared":true,"installed":true,"version":"6.3.2","resolution":"E:\\Coding_Practice\\AndroidStudioProjects\\PersonalTutorApp\\functions\\node_modules\\firebase-functions\\lib\\v2\\index.js"}}
+[debug] [2025-05-11T02:58:50.748Z] DEBUG: [runtime-status] [82480] Resolved module firebase-functions {"declared":true,"installed":true,"version":"6.3.2","resolution":"E:\\Coding_Practice\\AndroidStudioProjects\\PersonalTutorApp\\functions\\node_modules\\firebase-functions\\lib\\v2\\index.js"}
+[debug] [2025-05-11T02:58:50.763Z] DEBUG: [runtime-status] [82480] Resolved module firebase-admin {"declared":true,"installed":true,"version":"13.3.0","resolution":"E:\\Coding_Practice\\AndroidStudioProjects\\PersonalTutorApp\\functions\\node_modules\\firebase-admin\\lib\\index.js"}
+[debug] [2025-05-11T02:58:50.769Z] DEBUG: [runtime-status] [82480] Resolved module firebase-functions {"declared":true,"installed":true,"version":"6.3.2","resolution":"E:\\Coding_Practice\\AndroidStudioProjects\\PersonalTutorApp\\functions\\node_modules\\firebase-functions\\lib\\v2\\index.js"}
+[debug] [2025-05-11T02:58:50.770Z] DEBUG: [runtime-status] [82480] firebase-admin has been stubbed. {"adminResolution":{"declared":true,"installed":true,"version":"13.3.0","resolution":"E:\\Coding_Practice\\AndroidStudioProjects\\PersonalTutorApp\\functions\\node_modules\\firebase-admin\\lib\\index.js"}}
+[debug] [2025-05-11T02:58:50.912Z] DEBUG: [runtime-status] [82480] Functions runtime initialized. {"cwd":"E:\\Coding_Practice\\AndroidStudioProjects\\PersonalTutorApp\\functions","node_version":"22.11.0"}
+[debug] [2025-05-11T02:58:50.912Z] DEBUG: [runtime-status] [82480] Listening to port: \\?\pipe\fire_emu_7ffbe63a39a75b0d
+[debug] [2025-05-11T02:58:50.985Z] DEBUG: [worker-us-central1-sendMail-d768af03-c6f6-46e4-9cfd-f297aeb16c0d]: IDLE
+[debug] [2025-05-11T02:58:50.986Z] DEBUG: [worker-pool] submitRequest(triggerId=us-central1-sendMail)
+[debug] [2025-05-11T02:58:50.986Z] [functions] Beginning execution of "us-central1-sendMail"
+[debug] [2025-05-11T02:58:50.986Z] DEBUG: [worker-us-central1-sendMail-d768af03-c6f6-46e4-9cfd-f297aeb16c0d]: BUSY
+[info] >  {"verifications":{"app":"MISSING","auth":"MISSING"},"logging.googleapis.com/labels":{"firebase-log-type":"callable-request-verification"},"severity":"DEBUG","message":"Callable request verification passed"} {"user":{"verifications":{"app":"MISSING","auth":"MISSING"},"logging.googleapis.com/labels":{"firebase-log-type":"callable-request-verification"},"severity":"DEBUG","message":"Callable request verification passed"},"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-sendMail"},"extension":{},"message":"\u001b[90m> \u001b[39m {\"verifications\":{\"app\":\"MISSING\",\"auth\":\"MISSING\"},\"logging.googleapis.com/labels\":{\"firebase-log-type\":\"callable-request-verification\"},\"severity\":\"DEBUG\",\"message\":\"Callable request verification passed\"}"}}
+[debug] [2025-05-11T02:58:51.011Z] DEBUG: Finishing up request with event=pause
+[debug] [2025-05-11T02:58:51.011Z] [functions] Finished "us-central1-sendMail" in 24.9009ms
+[debug] [2025-05-11T02:58:51.011Z] DEBUG: [worker-us-central1-sendMail-d768af03-c6f6-46e4-9cfd-f297aeb16c0d]: IDLE
+[debug] [2025-05-11T02:58:51.011Z] DEBUG: Finishing up request with event=finish
+[debug] [2025-05-11T02:58:51.011Z] DEBUG: Finishing up request with event=close
+[debug] [2025-05-11T02:58:51.012Z] [work-queue] {"queuedWork":[],"queueLength":0,"runningWork":[],"workRunningCount":0}
+[debug] [2025-05-11T02:58:51.013Z] <<< [apiv2][status] POST http://127.0.0.1:5000/personaltutorapp-dev/us-central1/sendMail/ 400
+[debug] [2025-05-11T02:58:51.013Z] <<< [apiv2][body] POST http://127.0.0.1:5000/personaltutorapp-dev/us-central1/sendMail/ {"error":{"message":"Missing required fields","status":"INVALID_ARGUMENT"}}
+[debug] [2025-05-11T03:00:03.066Z] >>> [apiv2][query] POST http://127.0.0.1:5000/personaltutorapp-dev/us-central1/sendMail/ [none]
+[debug] [2025-05-11T03:00:03.066Z] >>> [apiv2][body] POST http://127.0.0.1:5000/personaltutorapp-dev/us-central1/sendMail/ {"to":"joezheng555@gmail.com","subject":"Test Email","content":"This is a test"}
+[debug] [2025-05-11T03:00:03.070Z] [work-queue] {"queuedWork":["/personaltutorapp-dev/us-central1/sendMail/-2025-05-11T03:00:03.070Z"],"queueLength":1,"runningWork":[],"workRunningCount":0}
+[debug] [2025-05-11T03:00:03.070Z] [work-queue] {"queuedWork":[],"queueLength":0,"runningWork":["/personaltutorapp-dev/us-central1/sendMail/-2025-05-11T03:00:03.070Z"],"workRunningCount":1}
+[debug] [2025-05-11T03:00:03.070Z] Accepted request POST /personaltutorapp-dev/us-central1/sendMail/ --> us-central1-sendMail
+[debug] [2025-05-11T03:00:03.074Z] DEBUG: [functions] Runtime ready! Sending request!
+[debug] [2025-05-11T03:00:03.074Z] DEBUG: [functions] Got req.url=/personaltutorapp-dev/us-central1/sendMail/, mapping to path=/
+[debug] [2025-05-11T03:00:03.074Z] DEBUG: [worker-pool] submitRequest(triggerId=us-central1-sendMail)
+[debug] [2025-05-11T03:00:03.074Z] [functions] Beginning execution of "us-central1-sendMail"
+[debug] [2025-05-11T03:00:03.074Z] DEBUG: [worker-us-central1-sendMail-d768af03-c6f6-46e4-9cfd-f297aeb16c0d]: BUSY
+[info] >  {"to":"joezheng555@gmail.com","subject":"Test Email","content":"This is a test","severity":"WARNING","message":"Request body is missing data."} {"user":{"to":"joezheng555@gmail.com","subject":"Test Email","content":"This is a test","severity":"WARNING","message":"Request body is missing data."},"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-sendMail"},"extension":{},"message":"\u001b[90m> \u001b[39m {\"to\":\"joezheng555@gmail.com\",\"subject\":\"Test Email\",\"content\":\"This is a test\",\"severity\":\"WARNING\",\"message\":\"Request body is missing data.\"}"}}
+[info] >  {"severity":"ERROR","message":"Error: Invalid request, unable to process.\n    at entryFromArgs (E:\\Coding_Practice\\AndroidStudioProjects\\PersonalTutorApp\\functions\\node_modules\\firebase-functions\\lib\\logger\\index.js:133:19)\n    at Object.error (E:\\Coding_Practice\\AndroidStudioProjects\\PersonalTutorApp\\functions\\node_modules\\firebase-functions\\lib\\logger\\index.js:120:11)\n    at E:\\Coding_Practice\\AndroidStudioProjects\\PersonalTutorApp\\functions\\node_modules\\firebase-functions\\lib\\common\\providers\\https.js:431:24\n    at E:\\Coding_Practice\\AndroidStudioProjects\\PersonalTutorApp\\functions\\node_modules\\firebase-functions\\lib\\common\\providers\\https.js:392:25\n    at cors (E:\\Coding_Practice\\AndroidStudioProjects\\PersonalTutorApp\\functions\\node_modules\\cors\\lib\\index.js:188:7)\n    at E:\\Coding_Practice\\AndroidStudioProjects\\PersonalTutorApp\\functions\\node_modules\\cors\\lib\\index.js:224:17\n    at originCallback (E:\\Coding_Practice\\AndroidStudioProjects\\PersonalTutorApp\\functions\\node_modules\\cors\\lib\\index.js:214:15)\n    at E:\\Coding_Practice\\AndroidStudioProjects\\PersonalTutorApp\\functions\\node_modules\\cors\\lib\\index.js:219:13\n    at optionsCallback (E:\\Coding_Practice\\AndroidStudioProjects\\PersonalTutorApp\\functions\\node_modules\\cors\\lib\\index.js:199:9)\n    at corsMiddleware (E:\\Coding_Practice\\AndroidStudioProjects\\PersonalTutorApp\\functions\\node_modules\\cors\\lib\\index.js:204:7)"} {"user":{"severity":"ERROR","message":"Error: Invalid request, unable to process.\n    at entryFromArgs (E:\\Coding_Practice\\AndroidStudioProjects\\PersonalTutorApp\\functions\\node_modules\\firebase-functions\\lib\\logger\\index.js:133:19)\n    at Object.error (E:\\Coding_Practice\\AndroidStudioProjects\\PersonalTutorApp\\functions\\node_modules\\firebase-functions\\lib\\logger\\index.js:120:11)\n    at E:\\Coding_Practice\\AndroidStudioProjects\\PersonalTutorApp\\functions\\node_modules\\firebase-functions\\lib\\common\\providers\\https.js:431:24\n    at E:\\Coding_Practice\\AndroidStudioProjects\\PersonalTutorApp\\functions\\node_modules\\firebase-functions\\lib\\common\\providers\\https.js:392:25\n    at cors (E:\\Coding_Practice\\AndroidStudioProjects\\PersonalTutorApp\\functions\\node_modules\\cors\\lib\\index.js:188:7)\n    at E:\\Coding_Practice\\AndroidStudioProjects\\PersonalTutorApp\\functions\\node_modules\\cors\\lib\\index.js:224:17\n    at originCallback (E:\\Coding_Practice\\AndroidStudioProjects\\PersonalTutorApp\\functions\\node_modules\\cors\\lib\\index.js:214:15)\n    at E:\\Coding_Practice\\AndroidStudioProjects\\PersonalTutorApp\\functions\\node_modules\\cors\\lib\\index.js:219:13\n    at optionsCallback (E:\\Coding_Practice\\AndroidStudioProjects\\PersonalTutorApp\\functions\\node_modules\\cors\\lib\\index.js:199:9)\n    at corsMiddleware (E:\\Coding_Practice\\AndroidStudioProjects\\PersonalTutorApp\\functions\\node_modules\\cors\\lib\\index.js:204:7)"},"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-sendMail"},"extension":{},"message":"\u001b[90m> \u001b[39m {\"severity\":\"ERROR\",\"message\":\"Error: Invalid request, unable to process.\\n    at entryFromArgs (E:\\\\Coding_Practice\\\\AndroidStudioProjects\\\\PersonalTutorApp\\\\functions\\\\node_modules\\\\firebase-functions\\\\lib\\\\logger\\\\index.js:133:19)\\n    at Object.error (E:\\\\Coding_Practice\\\\AndroidStudioProjects\\\\PersonalTutorApp\\\\functions\\\\node_modules\\\\firebase-functions\\\\lib\\\\logger\\\\index.js:120:11)\\n    at E:\\\\Coding_Practice\\\\AndroidStudioProjects\\\\PersonalTutorApp\\\\functions\\\\node_modules\\\\firebase-functions\\\\lib\\\\common\\\\providers\\\\https.js:431:24\\n    at E:\\\\Coding_Practice\\\\AndroidStudioProjects\\\\PersonalTutorApp\\\\functions\\\\node_modules\\\\firebase-functions\\\\lib\\\\common\\\\providers\\\\https.js:392:25\\n    at cors (E:\\\\Coding_Practice\\\\AndroidStudioProjects\\\\PersonalTutorApp\\\\functions\\\\node_modules\\\\cors\\\\lib\\\\index.js:188:7)\\n    at E:\\\\Coding_Practice\\\\AndroidStudioProjects\\\\PersonalTutorApp\\\\functions\\\\node_modules\\\\cors\\\\lib\\\\index.js:224:17\\n    at originCallback (E:\\\\Coding_Practice\\\\AndroidStudioProjects\\\\PersonalTutorApp\\\\functions\\\\node_modules\\\\cors\\\\lib\\\\index.js:214:15)\\n    at E:\\\\Coding_Practice\\\\AndroidStudioProjects\\\\PersonalTutorApp\\\\functions\\\\node_modules\\\\cors\\\\lib\\\\index.js:219:13\\n    at optionsCallback (E:\\\\Coding_Practice\\\\AndroidStudioProjects\\\\PersonalTutorApp\\\\functions\\\\node_modules\\\\cors\\\\lib\\\\index.js:199:9)\\n    at corsMiddleware (E:\\\\Coding_Practice\\\\AndroidStudioProjects\\\\PersonalTutorApp\\\\functions\\\\node_modules\\\\cors\\\\lib\\\\index.js:204:7)\"}"}}
+[debug] [2025-05-11T03:00:03.079Z] DEBUG: Finishing up request with event=pause
+[debug] [2025-05-11T03:00:03.079Z] [functions] Finished "us-central1-sendMail" in 4.5699ms
+[debug] [2025-05-11T03:00:03.079Z] DEBUG: [worker-us-central1-sendMail-d768af03-c6f6-46e4-9cfd-f297aeb16c0d]: IDLE
+[debug] [2025-05-11T03:00:03.079Z] DEBUG: Finishing up request with event=finish
+[debug] [2025-05-11T03:00:03.079Z] DEBUG: Finishing up request with event=close
+[debug] [2025-05-11T03:00:03.079Z] [work-queue] {"queuedWork":[],"queueLength":0,"runningWork":[],"workRunningCount":0}
+[debug] [2025-05-11T03:00:03.080Z] <<< [apiv2][status] POST http://127.0.0.1:5000/personaltutorapp-dev/us-central1/sendMail/ 400
+[debug] [2025-05-11T03:00:03.080Z] <<< [apiv2][body] POST http://127.0.0.1:5000/personaltutorapp-dev/us-central1/sendMail/ {"error":{"message":"Bad Request","status":"INVALID_ARGUMENT"}}
+[debug] [2025-05-11T03:00:43.963Z] >>> [apiv2][query] POST http://127.0.0.1:5000/personaltutorapp-dev/us-central1/sendMail/ [none]
+[debug] [2025-05-11T03:00:43.963Z] >>> [apiv2][body] POST http://127.0.0.1:5000/personaltutorapp-dev/us-central1/sendMail/ {"to":"joezheng555@gmail.com","subject":"Test Email","content":"This is a test"}
+[debug] [2025-05-11T03:00:43.965Z] [work-queue] {"queuedWork":["/personaltutorapp-dev/us-central1/sendMail/-2025-05-11T03:00:43.965Z"],"queueLength":1,"runningWork":[],"workRunningCount":0}
+[debug] [2025-05-11T03:00:43.966Z] [work-queue] {"queuedWork":[],"queueLength":0,"runningWork":["/personaltutorapp-dev/us-central1/sendMail/-2025-05-11T03:00:43.965Z"],"workRunningCount":1}
+[debug] [2025-05-11T03:00:43.966Z] Accepted request POST /personaltutorapp-dev/us-central1/sendMail/ --> us-central1-sendMail
+[debug] [2025-05-11T03:00:43.968Z] DEBUG: [functions] Runtime ready! Sending request!
+[debug] [2025-05-11T03:00:43.969Z] DEBUG: [functions] Got req.url=/personaltutorapp-dev/us-central1/sendMail/, mapping to path=/
+[debug] [2025-05-11T03:00:43.969Z] DEBUG: [worker-pool] submitRequest(triggerId=us-central1-sendMail)
+[debug] [2025-05-11T03:00:43.969Z] [functions] Beginning execution of "us-central1-sendMail"
+[debug] [2025-05-11T03:00:43.969Z] DEBUG: [worker-us-central1-sendMail-d768af03-c6f6-46e4-9cfd-f297aeb16c0d]: BUSY
+[info] >  {"to":"joezheng555@gmail.com","subject":"Test Email","content":"This is a test","severity":"WARNING","message":"Request body is missing data."} {"user":{"to":"joezheng555@gmail.com","subject":"Test Email","content":"This is a test","severity":"WARNING","message":"Request body is missing data."},"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-sendMail"},"extension":{},"message":"\u001b[90m> \u001b[39m {\"to\":\"joezheng555@gmail.com\",\"subject\":\"Test Email\",\"content\":\"This is a test\",\"severity\":\"WARNING\",\"message\":\"Request body is missing data.\"}"}}
+[info] >  {"severity":"ERROR","message":"Error: Invalid request, unable to process.\n    at entryFromArgs (E:\\Coding_Practice\\AndroidStudioProjects\\PersonalTutorApp\\functions\\node_modules\\firebase-functions\\lib\\logger\\index.js:133:19)\n    at Object.error (E:\\Coding_Practice\\AndroidStudioProjects\\PersonalTutorApp\\functions\\node_modules\\firebase-functions\\lib\\logger\\index.js:120:11)\n    at E:\\Coding_Practice\\AndroidStudioProjects\\PersonalTutorApp\\functions\\node_modules\\firebase-functions\\lib\\common\\providers\\https.js:431:24\n    at E:\\Coding_Practice\\AndroidStudioProjects\\PersonalTutorApp\\functions\\node_modules\\firebase-functions\\lib\\common\\providers\\https.js:392:25\n    at cors (E:\\Coding_Practice\\AndroidStudioProjects\\PersonalTutorApp\\functions\\node_modules\\cors\\lib\\index.js:188:7)\n    at E:\\Coding_Practice\\AndroidStudioProjects\\PersonalTutorApp\\functions\\node_modules\\cors\\lib\\index.js:224:17\n    at originCallback (E:\\Coding_Practice\\AndroidStudioProjects\\PersonalTutorApp\\functions\\node_modules\\cors\\lib\\index.js:214:15)\n    at E:\\Coding_Practice\\AndroidStudioProjects\\PersonalTutorApp\\functions\\node_modules\\cors\\lib\\index.js:219:13\n    at optionsCallback (E:\\Coding_Practice\\AndroidStudioProjects\\PersonalTutorApp\\functions\\node_modules\\cors\\lib\\index.js:199:9)\n    at corsMiddleware (E:\\Coding_Practice\\AndroidStudioProjects\\PersonalTutorApp\\functions\\node_modules\\cors\\lib\\index.js:204:7)"} {"user":{"severity":"ERROR","message":"Error: Invalid request, unable to process.\n    at entryFromArgs (E:\\Coding_Practice\\AndroidStudioProjects\\PersonalTutorApp\\functions\\node_modules\\firebase-functions\\lib\\logger\\index.js:133:19)\n    at Object.error (E:\\Coding_Practice\\AndroidStudioProjects\\PersonalTutorApp\\functions\\node_modules\\firebase-functions\\lib\\logger\\index.js:120:11)\n    at E:\\Coding_Practice\\AndroidStudioProjects\\PersonalTutorApp\\functions\\node_modules\\firebase-functions\\lib\\common\\providers\\https.js:431:24\n    at E:\\Coding_Practice\\AndroidStudioProjects\\PersonalTutorApp\\functions\\node_modules\\firebase-functions\\lib\\common\\providers\\https.js:392:25\n    at cors (E:\\Coding_Practice\\AndroidStudioProjects\\PersonalTutorApp\\functions\\node_modules\\cors\\lib\\index.js:188:7)\n    at E:\\Coding_Practice\\AndroidStudioProjects\\PersonalTutorApp\\functions\\node_modules\\cors\\lib\\index.js:224:17\n    at originCallback (E:\\Coding_Practice\\AndroidStudioProjects\\PersonalTutorApp\\functions\\node_modules\\cors\\lib\\index.js:214:15)\n    at E:\\Coding_Practice\\AndroidStudioProjects\\PersonalTutorApp\\functions\\node_modules\\cors\\lib\\index.js:219:13\n    at optionsCallback (E:\\Coding_Practice\\AndroidStudioProjects\\PersonalTutorApp\\functions\\node_modules\\cors\\lib\\index.js:199:9)\n    at corsMiddleware (E:\\Coding_Practice\\AndroidStudioProjects\\PersonalTutorApp\\functions\\node_modules\\cors\\lib\\index.js:204:7)"},"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-sendMail"},"extension":{},"message":"\u001b[90m> \u001b[39m {\"severity\":\"ERROR\",\"message\":\"Error: Invalid request, unable to process.\\n    at entryFromArgs (E:\\\\Coding_Practice\\\\AndroidStudioProjects\\\\PersonalTutorApp\\\\functions\\\\node_modules\\\\firebase-functions\\\\lib\\\\logger\\\\index.js:133:19)\\n    at Object.error (E:\\\\Coding_Practice\\\\AndroidStudioProjects\\\\PersonalTutorApp\\\\functions\\\\node_modules\\\\firebase-functions\\\\lib\\\\logger\\\\index.js:120:11)\\n    at E:\\\\Coding_Practice\\\\AndroidStudioProjects\\\\PersonalTutorApp\\\\functions\\\\node_modules\\\\firebase-functions\\\\lib\\\\common\\\\providers\\\\https.js:431:24\\n    at E:\\\\Coding_Practice\\\\AndroidStudioProjects\\\\PersonalTutorApp\\\\functions\\\\node_modules\\\\firebase-functions\\\\lib\\\\common\\\\providers\\\\https.js:392:25\\n    at cors (E:\\\\Coding_Practice\\\\AndroidStudioProjects\\\\PersonalTutorApp\\\\functions\\\\node_modules\\\\cors\\\\lib\\\\index.js:188:7)\\n    at E:\\\\Coding_Practice\\\\AndroidStudioProjects\\\\PersonalTutorApp\\\\functions\\\\node_modules\\\\cors\\\\lib\\\\index.js:224:17\\n    at originCallback (E:\\\\Coding_Practice\\\\AndroidStudioProjects\\\\PersonalTutorApp\\\\functions\\\\node_modules\\\\cors\\\\lib\\\\index.js:214:15)\\n    at E:\\\\Coding_Practice\\\\AndroidStudioProjects\\\\PersonalTutorApp\\\\functions\\\\node_modules\\\\cors\\\\lib\\\\index.js:219:13\\n    at optionsCallback (E:\\\\Coding_Practice\\\\AndroidStudioProjects\\\\PersonalTutorApp\\\\functions\\\\node_modules\\\\cors\\\\lib\\\\index.js:199:9)\\n    at corsMiddleware (E:\\\\Coding_Practice\\\\AndroidStudioProjects\\\\PersonalTutorApp\\\\functions\\\\node_modules\\\\cors\\\\lib\\\\index.js:204:7)\"}"}}
+[debug] [2025-05-11T03:00:43.973Z] DEBUG: Finishing up request with event=pause
+[debug] [2025-05-11T03:00:43.973Z] [functions] Finished "us-central1-sendMail" in 4.1567ms
+[debug] [2025-05-11T03:00:43.973Z] DEBUG: [worker-us-central1-sendMail-d768af03-c6f6-46e4-9cfd-f297aeb16c0d]: IDLE
+[debug] [2025-05-11T03:00:43.973Z] DEBUG: Finishing up request with event=finish
+[debug] [2025-05-11T03:00:43.973Z] DEBUG: Finishing up request with event=close
+[debug] [2025-05-11T03:00:43.973Z] [work-queue] {"queuedWork":[],"queueLength":0,"runningWork":[],"workRunningCount":0}
+[debug] [2025-05-11T03:00:43.974Z] <<< [apiv2][status] POST http://127.0.0.1:5000/personaltutorapp-dev/us-central1/sendMail/ 400
+[debug] [2025-05-11T03:00:43.974Z] <<< [apiv2][body] POST http://127.0.0.1:5000/personaltutorapp-dev/us-central1/sendMail/ {"error":{"message":"Bad Request","status":"INVALID_ARGUMENT"}}
