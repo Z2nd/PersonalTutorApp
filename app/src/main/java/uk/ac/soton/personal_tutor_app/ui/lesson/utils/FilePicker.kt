@@ -1,10 +1,9 @@
-package uk.ac.soton.personal_tutor_app.utils
+package uk.ac.soton.personal_tutor_app.ui.lesson.utils
 
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
 
 class FilePicker(private val activity: Activity) {
     private var onFileSelected: ((Uri) -> Unit)? = null

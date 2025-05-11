@@ -38,7 +38,7 @@ import uk.ac.soton.personal_tutor_app.data.model.Lesson
 import uk.ac.soton.personal_tutor_app.data.model.LessonPage
 import uk.ac.soton.personal_tutor_app.data.repository.EnrollmentRepository
 import uk.ac.soton.personal_tutor_app.data.repository.LessonRepository
-import uk.ac.soton.personal_tutor_app.utils.FilePicker
+import uk.ac.soton.personal_tutor_app.ui.lesson.utils.FilePicker
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.graphics.Color
@@ -149,32 +149,41 @@ fun LessonDetailScreen(
                     )
                 }
                 if (isTutor) {
-                    Button(onClick = {
-                        filePicker.registerFilePicker(launcher) { uri ->
-                            val storage = FirebaseStorage.getInstance()
-                            val storageRef = storage.reference
-                            val pdfRef = storageRef.child("pdfs/${System.currentTimeMillis()}.pdf")
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Button(onClick = {
+                            filePicker.registerFilePicker(launcher) { uri ->
+                                val storage = FirebaseStorage.getInstance()
+                                val storageRef = storage.reference
+                                val pdfRef = storageRef.child("pdfs/${System.currentTimeMillis()}.pdf")
 
-                            val uploadTask = pdfRef.putFile(uri)
-                            uploadTask.addOnSuccessListener {
-                                pdfRef.downloadUrl.addOnSuccessListener { downloadUrl ->
-                                    println("File uploaded successfully: $downloadUrl")
-                                    pages[idx] = pages[idx].copy(imageUrl = downloadUrl.toString())
+                                val uploadTask = pdfRef.putFile(uri)
+                                uploadTask.addOnSuccessListener {
+                                    pdfRef.downloadUrl.addOnSuccessListener { downloadUrl ->
+                                        println("File uploaded successfully: $downloadUrl")
+                                        pages[idx] = pages[idx].copy(imageUrl = downloadUrl.toString())
+                                    }
+                                }.addOnFailureListener { exception ->
+                                    println("File upload failed: ${exception.message}")
                                 }
-                            }.addOnFailureListener { exception ->
-                                println("File upload failed: ${exception.message}")
                             }
+                        }) {
+                            Text(if (page.imageUrl.isNullOrEmpty()) "上传 PDF" else "替换 PDF")
                         }
-                    }) {
-                        Text(if (page.imageUrl.isNullOrEmpty()) "上传 PDF" else "替换 PDF")
+                        Button(onClick = { pages.removeAt(idx) }) {
+                            Text("删除资料页")
+                        }
                     }
                 }
                 Spacer(Modifier.height(12.dp))
             }
-            if (isTutor && pages.size < 3) {
-                Button(onClick = { pages.add(LessonPage()) }) {
+            if (isTutor) {
+                Button(onClick = { pages.add(LessonPage()) },modifier = Modifier.fillMaxWidth()) {
                     Text("新增资料页")
                 }
+
                 Spacer(Modifier.height(16.dp))
             }
 
