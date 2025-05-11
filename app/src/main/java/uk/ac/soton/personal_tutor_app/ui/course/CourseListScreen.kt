@@ -160,8 +160,10 @@ fun CourseListScreen(
                                 Row(
                                     Modifier
                                         .fillMaxWidth()
-                                        .clickable {
-                                            navController.navigate("courseDetail/${course.id}/$userRole")
+                                        .clickable(enabled = userRole == "Tutor" || stat == "accepted") {
+                                            if (userRole == "Tutor" || stat == "accepted") {
+                                                navController.navigate("courseDetail/${course.id}/$userRole")
+                                            }
                                         }
                                         .padding(vertical = 8.dp),
                                     horizontalArrangement = Arrangement.SpaceBetween

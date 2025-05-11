@@ -191,13 +191,13 @@ fun LessonDetailScreen(
             Spacer(Modifier.height(16.dp))
 
             // Student: show completion status
-            if (!isTutor) {
-                Text(
-                    text = if (isCompleted) "已完成" else "未完成",
-                    style = MaterialTheme.typography.titleLarge
-                )
-                Spacer(Modifier.height(16.dp))
-            }
+//            if (!isTutor) {
+//                Text(
+//                    text = if (isCompleted) "已完成" else "未完成",
+//                    style = MaterialTheme.typography.titleLarge
+//                )
+//                Spacer(Modifier.height(16.dp))
+//            }
 
             // Tutor: Save/Update & Delete
             if (isTutor) {

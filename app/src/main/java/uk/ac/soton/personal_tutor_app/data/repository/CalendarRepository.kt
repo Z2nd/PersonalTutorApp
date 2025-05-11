@@ -19,6 +19,17 @@ object CalendarRepository {
         return if (snapshot.isEmpty) null else snapshot.documents.first().toObject(TutorAvailability::class.java)
     }
 
+    /** 获取当前学生预约的导师可用时间段 */
+    suspend fun getFilteredTutorAvailability(tutorId: String, studentId: String): List<TimeSlot> {
+        val snapshot = collection.whereEqualTo("tutorId", tutorId).get().await()
+        if (snapshot.isEmpty) return emptyList()
+
+        val tutorAvailability = snapshot.documents.first().toObject(TutorAvailability::class.java) ?: return emptyList()
+
+        // 过滤时间段：只保留当前学生预约的或未被预约的时间段
+        return tutorAvailability.timeSlots.filter { it.available || it.studentId == studentId }
+    }
+
     /** 创建默认的导师可用时间 */
     suspend fun createDefaultAvailability(tutorId: String): TutorAvailability {
         val defaultAvailability = TutorAvailability(
@@ -60,6 +71,31 @@ object CalendarRepository {
 
         if (updatedTimeSlots == tutorAvailability.timeSlots) {
             // 没有找到匹配的可用时间段
+            return false
+        }
+
+        document.reference.update("timeSlots", updatedTimeSlots).await()
+        return true
+    }
+
+    /** 取消学生预约的时间段 */
+    suspend fun cancelTimeSlot(tutorId: String, timeSlot: TimeSlot, studentId: String): Boolean {
+        val snapshot = collection.whereEqualTo("tutorId", tutorId).get().await()
+        if (snapshot.isEmpty) return false
+
+        val document = snapshot.documents.first()
+        val tutorAvailability = document.toObject(TutorAvailability::class.java) ?: return false
+
+        val updatedTimeSlots = tutorAvailability.timeSlots.map {
+            if (it.start == timeSlot.start && it.end == timeSlot.end && it.studentId == studentId) {
+                it.copy(available = true, studentId = "")
+            } else {
+                it
+            }
+        }
+
+        if (updatedTimeSlots == tutorAvailability.timeSlots) {
+            // 没有找到匹配的预约时间段
             return false
         }
 

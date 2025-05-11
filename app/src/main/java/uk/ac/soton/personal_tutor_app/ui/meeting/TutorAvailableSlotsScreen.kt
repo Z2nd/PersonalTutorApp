@@ -30,7 +30,7 @@ fun TutorAvailableSlotsScreen(navController: NavHostController, tutorId: String)
         isLoading = true
         errorMessage = null
         try {
-            timeSlots = CalendarRepository.getTutorAvailability(tutorId)?.timeSlots ?: emptyList()
+            timeSlots = CalendarRepository.getFilteredTutorAvailability(tutorId, currentId)
         } catch (e: Exception) {
             errorMessage = e.message
         }
@@ -76,9 +76,10 @@ fun TutorAvailableSlotsScreen(navController: NavHostController, tutorId: String)
 
                                 Button(
                                     onClick = {
-                                        if (slot.available) {
-                                            scope.launch {
-                                                try {
+                                        scope.launch {
+                                            try {
+                                                if (slot.available) {
+                                                    // 预约逻辑
                                                     val success = CalendarRepository.bookTimeSlot(
                                                         tutorId = tutorId,
                                                         timeSlot = slot,
@@ -95,13 +96,30 @@ fun TutorAvailableSlotsScreen(navController: NavHostController, tutorId: String)
                                                     } else {
                                                         errorMessage = "预约失败，时间段不可用。"
                                                     }
-                                                } catch (e: Exception) {
-                                                    errorMessage = "预约失败：${e.message}"
+                                                } else {
+                                                    // 取消预约逻辑
+                                                    val success = CalendarRepository.cancelTimeSlot(
+                                                        tutorId = tutorId,
+                                                        timeSlot = slot,
+                                                        studentId = currentId
+                                                    )
+                                                    if (success) {
+                                                        timeSlots = timeSlots.map {
+                                                            if (it.start == slot.start && it.end == slot.end) {
+                                                                it.copy(available = true)
+                                                            } else {
+                                                                it
+                                                            }
+                                                        }
+                                                    } else {
+                                                        errorMessage = "取消预约失败。"
+                                                    }
                                                 }
+                                            } catch (e: Exception) {
+                                                errorMessage = "操作失败：${e.message}"
                                             }
                                         }
                                     },
-                                    enabled = slot.available,
                                     colors = ButtonDefaults.buttonColors(
                                         containerColor = if (slot.available) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondary
                                     )

@@ -54,6 +54,7 @@ fun EnrollApprovalScreen(
     Scaffold { padding ->
         Box(
             Modifier
+                .systemBarsPadding()
                 .fillMaxSize()
                 .padding(padding)
                 .padding(16.dp)

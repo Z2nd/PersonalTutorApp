@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
@@ -39,13 +41,12 @@ fun LessonListScreen(
     var isLoading by remember { mutableStateOf(true) }
     var error by remember { mutableStateOf<String?>(null) }
 
-    // 拉取课时列表
     LaunchedEffect(courseId) {
         LessonRepository.getLessonsForCourse(courseId)
             .catch { e -> error = e.message }
             .collect { lessons = it }
     }
-    // 拉取学生报名及完成列表
+
     LaunchedEffect(currentUid) {
         val enroll = EnrollmentRepository.getEnrollmentsForStudent(currentUid)
             .first()
@@ -63,7 +64,6 @@ fun LessonListScreen(
             .fillMaxSize()
             .padding(16.dp)
     ) {
-        // Tutor 专属：创建新课时
         if (isTutor) {
             Button(
                 onClick = { navController.navigate("lessonDetail/new/$courseId") },
@@ -92,42 +92,44 @@ fun LessonListScreen(
                 }
             }
             else -> {
-                LazyColumn(Modifier.fillMaxSize()) {
+                LazyColumn(
+                    Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
                     items(lessons) { lesson ->
-                        Row(
-                            Modifier
+                        Card(
+                            modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(vertical = 8.dp),
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.SpaceBetween
+                                .clickable {
+                                    navController.navigate("lessonDetail/${lesson.id}/$courseId")
+                                },
+                            elevation = CardDefaults.cardElevation(4.dp)
                         ) {
-                            val done = lesson.id in completedLessons
-//                            // Student 只能点已完成的，Tutor 全可点
-//                            val canView = isTutor || done
-                            val canView = true // 允许所有用户点击课时
-                            Text(
-                                text = lesson.title,
-                                style = MaterialTheme.typography.bodyLarge,
-                                modifier = Modifier
-                                    .weight(1f)
-                                    .clickable(enabled = canView) {
-                                        navController.navigate("lessonDetail/${lesson.id}/$courseId")
+                            Row(
+                                Modifier
+                                    .fillMaxWidth()
+                                    .padding(16.dp),
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.SpaceBetween
+                            ) {
+                                Text(
+                                    text = lesson.title,
+                                    style = MaterialTheme.typography.bodyLarge,
+                                    modifier = Modifier.weight(1f)
+                                )
+                                if (isTutor) {
+                                    Button(onClick = {
+                                        scope.launch {
+                                            LessonRepository.saveOrUpdate(
+                                                lesson.copy(completed = !lesson.completed)
+                                            )
+                                        }
+                                    }) {
+                                        Text(if (lesson.completed) "已完成" else "未完成")
                                     }
-                                    .padding(end = 8.dp)
-                            )
-                            if (isTutor) {
-                                Button(onClick = {
-                                    scope.launch {
-                                        LessonRepository.saveOrUpdate(
-                                            lesson.copy(completed = !lesson.completed)
-                                        )
-                                    }
-                                }) {
-                                    Text(if (lesson.completed) "已完成" else "未完成")
                                 }
                             }
                         }
-                        Divider()
                     }
                 }
             }
