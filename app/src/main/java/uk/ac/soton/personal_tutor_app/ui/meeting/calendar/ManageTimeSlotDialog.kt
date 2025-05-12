@@ -14,31 +14,40 @@ fun ManageTimeSlotDialog(
     onDismiss: () -> Unit,
     onDelete: () -> Unit
 ) {
-    var studentName by remember { mutableStateOf<String?>(null) }
+    var studentName by remember { mutableStateOf("Loading...") }
 
     LaunchedEffect(timeSlot.studentId) {
-        studentName = UserRepository.getUserProfile(timeSlot.studentId).displayName
+        if (!timeSlot.studentId.isNullOrEmpty()) {
+            try {
+                val profile = UserRepository.getUserProfile(timeSlot.studentId)
+                studentName = profile.displayName ?: "Unknown Student"
+            } catch (e: Exception) {
+                studentName = "Failed to load student name"
+            }
+        } else {
+            studentName = "No Student"
+        }
     }
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("管理时间段") },
+        title = { Text("Manage Time Slot") },
         text = {
             Column {
-                Text("开始时间: ${timeSlot.start.toDate()}")
+                Text("Start Time: ${timeSlot.start.toDate()}")
                 Spacer(Modifier.height(8.dp))
-                Text("结束时间: ${timeSlot.end.toDate()}")
+                Text("End Time: ${timeSlot.end.toDate()}")
                 Spacer(Modifier.height(8.dp))
-                Text("预约学生: ${studentName ?: "无"}")
+                Text("Student: ${studentName ?: "无"}")
             }
         },
         confirmButton = {
             Button(onClick = onDelete) {
-                Text("删除")
+                Text("Delete")
             }
         },
         dismissButton = {
             Button(onClick = onDismiss) {
-                Text("取消")
+                Text("Cancel")
             }
         }
     )

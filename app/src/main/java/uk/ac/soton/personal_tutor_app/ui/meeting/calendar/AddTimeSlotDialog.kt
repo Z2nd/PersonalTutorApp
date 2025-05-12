@@ -49,7 +49,7 @@ fun AddTimeSlotDialog(
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("添加时间段") },
+        title = { Text("Add Time Slot") },
         text = {
             Column {
                 Button(
@@ -60,7 +60,7 @@ fun AddTimeSlotDialog(
                     },
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    Text(startTime?.let { "开始时间: ${it.toDate()}" } ?: "选择开始时间")
+                    Text(startTime?.let { "Start Time: ${it.toDate()}" } ?: "Choose Start Time")
                 }
                 Spacer(Modifier.height(8.dp))
                 Button(
@@ -71,7 +71,7 @@ fun AddTimeSlotDialog(
                     },
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    Text(endTime?.let { "结束时间: ${it.toDate()}" } ?: "选择结束时间")
+                    Text(endTime?.let { "End Time: ${it.toDate()}" } ?: "Choose End Time")
                 }
             }
         },
@@ -84,12 +84,12 @@ fun AddTimeSlotDialog(
                 },
                 enabled = startTime != null && endTime != null
             ) {
-                Text("确认")
+                Text("Confirm")
             }
         },
         dismissButton = {
             Button(onClick = onDismiss) {
-                Text("取消")
+                Text("Cancel")
             }
         }
     )
