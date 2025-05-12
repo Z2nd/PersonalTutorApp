@@ -47,7 +47,7 @@ fun TutorCalendarScreen(navController: NavHostController) {
 
     Scaffold(
         topBar = {
-            TopAppBar(title = { Text("我的日历") })
+            TopAppBar(title = { Text("My Slot") })
         }
     ) { padding ->
         Box(Modifier
@@ -56,7 +56,7 @@ fun TutorCalendarScreen(navController: NavHostController) {
             when {
                 isLoading -> CircularProgressIndicator(Modifier.align(Alignment.Center))
                 errorMessage != null -> Text(
-                    "加载失败：$errorMessage",
+                    "Fail to load：$errorMessage",
                     color = MaterialTheme.colorScheme.error,
                     modifier = Modifier.align(Alignment.Center)
                 )
@@ -68,7 +68,7 @@ fun TutorCalendarScreen(navController: NavHostController) {
                                 addTimeSlot = true },
                             modifier = Modifier.fillMaxWidth()
                         ) {
-                            Text("添加可用时间段")
+                            Text("Add Slot")
                         }
 
                         Spacer(Modifier.height(16.dp))
@@ -88,7 +88,7 @@ fun TutorCalendarScreen(navController: NavHostController) {
                                         selectedTimeSlot = slot
                                         showDialog = true
                                     }) {
-                                        Text("管理")
+                                        Text("Manage")
                                     }
                                 }
                             }

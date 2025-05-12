@@ -41,13 +41,13 @@ fun TutorUserApprovalScreen() {
                             scope.launch {
                                 try {
                                     UserRepository.approveUser(user.id)
-                                    Toast.makeText(context, "已通过 ${user.email}", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(context, "Approved ${user.email}", Toast.LENGTH_SHORT).show()
                                 } catch (e: Exception) {
-                                    Toast.makeText(context, "审批失败：${e.message}", Toast.LENGTH_LONG).show()
+                                    Toast.makeText(context, "Approval Failure：${e.message}", Toast.LENGTH_LONG).show()
                                 }
                             }
                         }) {
-                            Text("通过")
+                            Text("Accept")
                         }
                         Spacer(Modifier.width(8.dp))
                         // — 拒绝 —
@@ -55,13 +55,13 @@ fun TutorUserApprovalScreen() {
                             scope.launch {
                                 try {
                                     UserRepository.rejectUser(user.id)
-                                    Toast.makeText(context, "已拒绝 ${user.email}", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(context, "Rejected ${user.email}", Toast.LENGTH_SHORT).show()
                                 } catch (e: Exception) {
-                                    Toast.makeText(context, "拒绝失败：${e.message}", Toast.LENGTH_LONG).show()
+                                    Toast.makeText(context, "Rejection Failure：${e.message}", Toast.LENGTH_LONG).show()
                                 }
                             }
                         }) {
-                            Text("拒绝")
+                            Text("Reject")
                         }
                     }
                 }

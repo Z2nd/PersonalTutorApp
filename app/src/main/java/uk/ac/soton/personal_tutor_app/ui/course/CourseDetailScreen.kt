@@ -91,14 +91,14 @@ fun CourseDetailScreen(
                 OutlinedTextField(
                     value = title,
                     onValueChange = { title = it },
-                    label = { Text("课程标题") },
+                    label = { Text("Title") },
                     modifier = Modifier.fillMaxWidth()
                 )
                 Spacer(Modifier.height(8.dp))
                 OutlinedTextField(
                     value = description,
                     onValueChange = { description = it },
-                    label = { Text("课程简介") },
+                    label = { Text("Brief") },
                     modifier = Modifier.fillMaxWidth()
                 )
                 Spacer(Modifier.height(8.dp))
@@ -122,7 +122,7 @@ fun CourseDetailScreen(
                     },
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    Text(if (isNew) "保存" else "更新")
+                    Text(if (isNew) "Save" else "Update")
                 }
                 if (!isNew) {
                     Spacer(Modifier.height(8.dp))
@@ -136,7 +136,7 @@ fun CourseDetailScreen(
                         colors = ButtonDefaults.outlinedButtonColors(),
                         modifier = Modifier.fillMaxWidth()
                     ) {
-                        Text("删除")
+                        Text("Delete")
                     }
                 }
             } else {
@@ -145,7 +145,7 @@ fun CourseDetailScreen(
                 Spacer(Modifier.height(8.dp))
                 Text(description)
                 Spacer(Modifier.height(8.dp))
-                Text("类别：${selectedCategory.ifBlank { "—" }}")
+                Text("Category：${selectedCategory.ifBlank { "—" }}")
             }
 
             Spacer(Modifier.height(24.dp))
@@ -156,7 +156,7 @@ fun CourseDetailScreen(
                     onClick = { navController.navigate("lessons/$courseId") },
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    Text(if (isTutor) "查看/管理课时" else "查看课时")
+                    Text(if (isTutor) "Manage Lessons" else "Check Lessons")
                 }
             }
         }

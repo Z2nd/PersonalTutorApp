@@ -71,7 +71,7 @@ fun LessonListScreen(
                     .fillMaxWidth()
                     .padding(bottom = 16.dp)
             ) {
-                Text("创建课时")
+                Text("Add New Lesson")
             }
         }
 
@@ -83,12 +83,12 @@ fun LessonListScreen(
             }
             error != null -> {
                 Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    Text("加载课时失败：$error", color = MaterialTheme.colorScheme.error)
+                    Text("Fail to load lessons：$error", color = MaterialTheme.colorScheme.error)
                 }
             }
             lessons.isEmpty() -> {
                 Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    Text("暂无课时，请稍后添加")
+                    Text("No lessons available, please add one")
                 }
             }
             else -> {
@@ -125,7 +125,7 @@ fun LessonListScreen(
                                             )
                                         }
                                     }) {
-                                        Text(if (lesson.completed) "已完成" else "未完成")
+                                        Text(if (lesson.completed) "Finished" else "Not Finished")
                                     }
                                 }
                             }

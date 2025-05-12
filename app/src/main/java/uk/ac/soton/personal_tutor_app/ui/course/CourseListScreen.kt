@@ -110,14 +110,14 @@ fun CourseListScreen(
                 }
                 coursesError != null -> {
                     Text(
-                        "加载课程失败：$coursesError",
+                        "Failed to load course：$coursesError",
                         color = MaterialTheme.colorScheme.error,
                         modifier = Modifier.align(Alignment.Center)
                     )
                 }
                 statusError != null -> {
                     Text(
-                        "加载状态失败：$statusError",
+                        "Failed to load status：$statusError",
                         color = MaterialTheme.colorScheme.error,
                         modifier = Modifier.align(Alignment.Center)
                     )
@@ -130,7 +130,7 @@ fun CourseListScreen(
                         OutlinedTextField(
                             value = searchQuery,
                             onValueChange = { searchQuery = it },
-                            label = { Text("搜索课程名称") },
+                            label = { Text("Search Course Title") },
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(16.dp)
@@ -144,7 +144,7 @@ fun CourseListScreen(
                                     .fillMaxWidth()
                                     .padding(horizontal = 16.dp, vertical = 8.dp)
                             ) {
-                                Text("创建课程")
+                                Text("Create Course")
                             }
                         }
 
@@ -173,14 +173,14 @@ fun CourseListScreen(
                                         Button(onClick = {
                                             navController.navigate("enrollApproval/${course.id}")
                                         }) {
-                                            Text("报名审批")
+                                            Text("Application Approval")
                                         }
                                     } else {
                                         val (label, enabled) = when (stat) {
-                                            null -> "报名" to true
-                                            "pending" -> "已申请" to false
-                                            "accepted" -> "已报名" to false
-                                            "rejected" -> "已拒绝" to false
+                                            null -> "Apply" to true
+                                            "pending" -> "Pending" to false
+                                            "accepted" -> "Accepted" to false
+                                            "rejected" -> "Rejected" to false
                                             else -> stat to false
                                         }
                                         OutlinedButton(
@@ -191,9 +191,9 @@ fun CourseListScreen(
                                                             course.id,
                                                             currentUid
                                                         )
-                                                        snackbarHost.showSnackbar("申请已发送")
+                                                        snackbarHost.showSnackbar("Application sent")
                                                     } catch (e: Exception) {
-                                                        snackbarHost.showSnackbar("申请失败：${e.message}")
+                                                        snackbarHost.showSnackbar("Failed application：${e.message}")
                                                     }
                                                 }
                                             }, enabled = enabled

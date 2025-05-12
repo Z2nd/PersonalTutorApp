@@ -86,12 +86,12 @@ fun LessonDetailScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(if (lessonId == "new") "新建课时" else "课时详情") },
+                title = { Text(if (lessonId == "new") "Created Lesson" else "Lesson Detail") },
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
                         Icon(
                             imageVector = Icons.Filled.ArrowBack,
-                            contentDescription = "返回"
+                            contentDescription = "Back",
                         )
                     }
                 }
@@ -109,7 +109,7 @@ fun LessonDetailScreen(
             OutlinedTextField(
                 value = title,
                 onValueChange = { title = it },
-                label = { Text("课时名称") },
+                label = { Text("Title") },
                 enabled = isTutor,
                 modifier = Modifier.fillMaxWidth()
             )
@@ -125,7 +125,7 @@ fun LessonDetailScreen(
                     onValueChange = { newText ->
                         pages[idx] = page.copy(text = newText)
                     },
-                    label = { Text("资料 ${idx + 1} 文本") },
+                    label = { Text("Resource ${idx + 1}") },
                     enabled = isTutor,
                     modifier = Modifier.fillMaxWidth()
                 )
@@ -170,10 +170,10 @@ fun LessonDetailScreen(
                                 }
                             }
                         }) {
-                            Text(if (page.imageUrl.isNullOrEmpty()) "上传 PDF" else "替换 PDF")
+                            Text(if (page.imageUrl.isNullOrEmpty()) "Upload PDF" else "Replace PDF")
                         }
                         Button(onClick = { pages.removeAt(idx) }) {
-                            Text("删除资料页")
+                            Text("Delete Resource Page")
                         }
                     }
                 }
@@ -181,7 +181,7 @@ fun LessonDetailScreen(
             }
             if (isTutor) {
                 Button(onClick = { pages.add(LessonPage()) },modifier = Modifier.fillMaxWidth()) {
-                    Text("新增资料页")
+                    Text("New Resource Page")
                 }
 
                 Spacer(Modifier.height(16.dp))
@@ -217,7 +217,7 @@ fun LessonDetailScreen(
                     },
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    Text(if (lessonId == "new") "保存" else "更新")
+                    Text(if (lessonId == "new") "Save" else "Update")
                 }
                 if (lessonId != "new") {
                     Spacer(Modifier.height(8.dp))
@@ -231,7 +231,7 @@ fun LessonDetailScreen(
                         colors = ButtonDefaults.outlinedButtonColors(),
                         modifier = Modifier.fillMaxWidth()
                     ) {
-                        Text("删除")
+                        Text("Delete")
                     }
                 }
             }

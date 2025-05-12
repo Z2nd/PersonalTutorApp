@@ -40,10 +40,10 @@ fun TutorAvailableSlotsScreen(navController: NavHostController, tutorId: String)
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("导师可预约时间段") },
+                title = { Text("Available Slots") },
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "返回")
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
                     }
                 }
             )
@@ -57,7 +57,7 @@ fun TutorAvailableSlotsScreen(navController: NavHostController, tutorId: String)
             when {
                 isLoading -> CircularProgressIndicator(Modifier.align(Alignment.Center))
                 errorMessage != null -> Text(
-                    "加载失败：$errorMessage",
+                    "Fail to load time slots：$errorMessage",
                     color = MaterialTheme.colorScheme.error,
                     modifier = Modifier.align(Alignment.Center)
                 )
@@ -71,7 +71,7 @@ fun TutorAvailableSlotsScreen(navController: NavHostController, tutorId: String)
                                 horizontalArrangement = Arrangement.SpaceBetween
                             ) {
                                 Text(
-                                    "开始时间: ${CalendarRepository.formatTimestamp(slot.start)}\n结束时间: ${CalendarRepository.formatTimestamp(slot.end)}"
+                                    "Start time: ${CalendarRepository.formatTimestamp(slot.start)}\nEnd time: ${CalendarRepository.formatTimestamp(slot.end)}"
                                 )
 
                                 Button(
@@ -94,7 +94,7 @@ fun TutorAvailableSlotsScreen(navController: NavHostController, tutorId: String)
                                                             }
                                                         }
                                                     } else {
-                                                        errorMessage = "预约失败，时间段不可用。"
+                                                        errorMessage = "The booking failed and the time slot is unavailable."
                                                     }
                                                 } else {
                                                     // 取消预约逻辑
@@ -112,11 +112,11 @@ fun TutorAvailableSlotsScreen(navController: NavHostController, tutorId: String)
                                                             }
                                                         }
                                                     } else {
-                                                        errorMessage = "取消预约失败。"
+                                                        errorMessage = "Fail to cancel the booking."
                                                     }
                                                 }
                                             } catch (e: Exception) {
-                                                errorMessage = "操作失败：${e.message}"
+                                                errorMessage = "Fail：${e.message}"
                                             }
                                         }
                                     },
@@ -124,7 +124,7 @@ fun TutorAvailableSlotsScreen(navController: NavHostController, tutorId: String)
                                         containerColor = if (slot.available) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondary
                                     )
                                 ) {
-                                    Text(if (slot.available) "预约" else "已预约")
+                                    Text(if (slot.available) "Book" else "Booked")
                                 }
                             }
                         }

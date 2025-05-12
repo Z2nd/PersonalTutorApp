@@ -52,7 +52,7 @@ fun DashboardScreen(navController: NavHostController) {
     }
 
     Column(Modifier.fillMaxSize().padding(16.dp).systemBarsPadding()) {
-        Text("Dashboard: 课程与已报名学生数", style = MaterialTheme.typography.titleLarge)
+        Text("Dashboard: Courses and enrolled students", style = MaterialTheme.typography.titleLarge)
         Spacer(Modifier.height(16.dp))
 
         LazyColumn(Modifier.fillMaxSize()) {
@@ -65,7 +65,7 @@ fun DashboardScreen(navController: NavHostController) {
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text(course.title, style = MaterialTheme.typography.bodyLarge)
-                    Text("已报名：$count", style = MaterialTheme.typography.bodyMedium)
+                    Text("Applied：$count", style = MaterialTheme.typography.bodyMedium)
                 }
             }
         }

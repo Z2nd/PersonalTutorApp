@@ -65,14 +65,14 @@ fun EnrollApprovalScreen(
                 }
                 error != null -> {
                     Text(
-                        text = "加载失败：$error",
+                        text = "Fail to load：$error",
                         color = MaterialTheme.colorScheme.error,
                         modifier = Modifier.align(Alignment.Center)
                     )
                 }
                 pending.isEmpty() -> {
                     Text(
-                        text = "暂无待审批报名",
+                        text = "No applications pending approval",
                         modifier = Modifier.align(Alignment.Center)
                     )
                 }
@@ -106,7 +106,7 @@ fun EnrollApprovalScreen(
                                             EnrollmentRepository.updateStatus(enr.id, "accepted")
                                         }
                                     }) {
-                                        Text("同意")
+                                        Text("Accept")
                                     }
                                     Spacer(Modifier.width(8.dp))
                                     Button(onClick = {
@@ -114,7 +114,7 @@ fun EnrollApprovalScreen(
                                             EnrollmentRepository.updateStatus(enr.id, "rejected")
                                         }
                                     }) {
-                                        Text("拒绝")
+                                        Text("Reject")
                                     }
                                 }
                             }

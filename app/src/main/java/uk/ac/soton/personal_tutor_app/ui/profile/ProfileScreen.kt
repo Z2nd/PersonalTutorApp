@@ -110,13 +110,13 @@ fun ProfileScreen(
                     // 头像预览
                     Image(
                         painter = rememberAsyncImagePainter(photoUrl),
-                        contentDescription = "头像",
+                        contentDescription = "Bio",
                         modifier = Modifier
                             .size(100.dp)
                             .clip(CircleShape)
                     )
                     TextButton(onClick = { launcher.launch("image/*") }) {
-                        Text("上传头像")
+                        Text("Upload Bio")
                     }
                     Spacer(Modifier.height(16.dp))
 
@@ -124,7 +124,7 @@ fun ProfileScreen(
                     OutlinedTextField(
                         value = displayName,
                         onValueChange = { displayName = it },
-                        label = { Text("显示名称") },
+                        label = { Text("User Name") },
                         modifier = Modifier.fillMaxWidth()
                     )
                     Spacer(Modifier.height(8.dp))
@@ -133,7 +133,7 @@ fun ProfileScreen(
                     OutlinedTextField(
                         value = bio,
                         onValueChange = { bio = it },
-                        label = { Text("简介") },
+                        label = { Text("Introduction") },
                         modifier = Modifier.fillMaxWidth()
                     )
                     Spacer(Modifier.height(16.dp))
@@ -153,7 +153,7 @@ fun ProfileScreen(
                                         UserRepository.updateUserProfile(updated)
                                         error = null
                                     } catch (e: Exception) {
-                                        error = "保存失败：${e.message}"
+                                        error = "Fail to update profile：${e.message}"
                                     }
                                     isLoading = false
                                 }

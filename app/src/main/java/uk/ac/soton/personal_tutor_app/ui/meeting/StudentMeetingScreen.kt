@@ -43,7 +43,7 @@ fun StudentMeetingScreen(navController: NavHostController) {
         when {
             isLoading -> CircularProgressIndicator(Modifier.align(Alignment.Center))
             errorMessage != null -> Text(
-                "加载失败：$errorMessage",
+                "Fail to load tutors：$errorMessage",
                 modifier = Modifier.align(Alignment.Center)
             )
             else -> {
@@ -56,11 +56,11 @@ fun StudentMeetingScreen(navController: NavHostController) {
                             horizontalArrangement = Arrangement.SpaceBetween,
                             verticalAlignment = Alignment.CenterVertically
                         ) {
-                            Text(text = tutor.displayName ?: "未知导师", modifier = Modifier.weight(1f))
+                            Text(text = tutor.displayName ?: "Unknown Tutor", modifier = Modifier.weight(1f))
                             Button(onClick = {
                                 navController.navigate("tutorAvailableSlots/${tutor.id}")
                             }) {
-                                Text("查看日历")
+                                Text("Check Slots")
                             }
 
                         }

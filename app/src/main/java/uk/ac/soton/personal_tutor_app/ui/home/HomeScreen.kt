@@ -38,13 +38,13 @@ fun HomeScreen(
         Spacer(modifier = Modifier.height(16.dp))
 
         Button(onClick = onViewCourses, modifier = Modifier.fillMaxWidth()) {
-            Text("查看我的课程")
+            Text("My Courses")
         }
         Spacer(modifier = Modifier.height(16.dp))
 
         // 我的资料
         Button(onClick = onNavigateProfile, modifier = Modifier.fillMaxWidth()) {
-            Text("我的资料")
+            Text("My Profile")
         }
         Spacer(modifier = Modifier.height(16.dp))
 
@@ -54,7 +54,7 @@ fun HomeScreen(
                 onClick = onNavigateUserApproval,
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text("学员审核")
+                Text("Student Audit")
             }
             Spacer(modifier = Modifier.height(16.dp))
             Button(
@@ -65,11 +65,11 @@ fun HomeScreen(
             }
             Spacer(modifier = Modifier.height(16.dp))
             Button(onClick = { onNavigateTutorCalendar() }, modifier = Modifier.fillMaxWidth()) {
-                Text("我的日历")
+                Text("My Calendar")
             }
         }else{
             Button(onClick = onNavigateStudentMeeting, modifier = Modifier.fillMaxWidth()) {
-                Text("查看导师日历")
+                Text("Tutor Calendar")
             }
         }
     }

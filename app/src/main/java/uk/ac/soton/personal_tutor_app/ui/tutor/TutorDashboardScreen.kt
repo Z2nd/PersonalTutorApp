@@ -77,7 +77,7 @@ fun TutorDashboardScreen(
                 }
                 errorMessage != null -> {
                     Text(
-                        text = "加载失败：$errorMessage",
+                        text = "Fail to load：$errorMessage",
                         color = MaterialTheme.colorScheme.error,
                         modifier = Modifier.align(Alignment.Center)
                     )
@@ -109,7 +109,7 @@ fun TutorDashboardScreen(
                                     style = MaterialTheme.typography.titleMedium
                                 )
                                 Spacer(Modifier.height(4.dp))
-                                Text("已报名学生：$count")
+                                Text("Enrolled Students：$count")
                                 Spacer(Modifier.height(4.dp))
                                 LinearProgressIndicator(
                                     progress = averageProgress,
