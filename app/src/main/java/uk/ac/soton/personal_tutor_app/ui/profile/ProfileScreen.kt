@@ -73,7 +73,7 @@ fun ProfileScreen(
                     ref.putFile(it).await()
                     photoUrl = ref.downloadUrl.await().toString()
                 } catch (e: Exception) {
-                    error = "上传头像失败：${e.message}"
+                    error = "upload failed：${e.message}"
                 }
                 isLoading = false
             }
@@ -83,7 +83,7 @@ fun ProfileScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("我的资料") },
+                title = { Text("My profile") },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
                         Icon(Icons.Filled.ArrowBack, contentDescription = null)
@@ -161,7 +161,7 @@ fun ProfileScreen(
                         },
                         modifier = Modifier.fillMaxWidth()
                     ) {
-                        Text("保存")
+                        Text("Save")
                     }
 
                     // 错误提示

@@ -47,7 +47,7 @@ class AuthViewModel : ViewModel() {
                         _uiState.update {
                             it.copy(
                                 isLoading = false,
-                                errorMessage = "注册成功，请等待导师审核",
+                                errorMessage = "Waiting for approval",
                                 isAuthenticated = false
                             )
                         }
@@ -83,7 +83,7 @@ class AuthViewModel : ViewModel() {
                             isLoading = false,
                             role = profile.role,
                             isAuthenticated = allowed,
-                            errorMessage = if (!allowed) "账号待导师审核" else null
+                            errorMessage = if (!allowed) "Waiting for approval" else null
                         )
                     }
                 },

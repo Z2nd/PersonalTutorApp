@@ -81,7 +81,7 @@ fun CourseDetailScreen(
                 .verticalScroll(rememberScrollState())
         ) {
             // Progress bar
-            Text("进度：$completedCount/$totalCount")
+            Text("Progress：$completedCount/$totalCount")
             Spacer(Modifier.height(4.dp))
             LinearProgressIndicator(progress, Modifier.fillMaxWidth())
             Spacer(Modifier.height(16.dp))

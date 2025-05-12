@@ -133,7 +133,7 @@ fun LessonDetailScreen(
                     val fileName = url.substringAfterLast("%").substringBeforeLast("?")
                     Text(
                         text = AnnotatedString(
-                            text = "当前文件: $fileName",
+                            text = "file: $fileName",
                             spanStyle = androidx.compose.ui.text.SpanStyle(
                                 color = Color.Blue,
                                 textDecoration = TextDecoration.Underline
